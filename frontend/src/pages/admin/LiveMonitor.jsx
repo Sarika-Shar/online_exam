@@ -137,7 +137,7 @@ const LiveMonitor = () => {
 
     const socketUrl = import.meta.env.VITE_SOCKET_URL || (window.location.origin.includes(':5173')
       ? 'http://localhost:5000'
-      : window.location.origin);
+      : 'https://online-exam-4llf.onrender.com');
 
     const socket = io(socketUrl, {
       transports: ['websocket', 'polling'],
