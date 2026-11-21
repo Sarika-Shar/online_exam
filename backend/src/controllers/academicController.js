@@ -468,8 +468,10 @@ const createBatch = async (req, res, next) => {
       return res.status(400).json({ success: false, message: 'Class and Batch name are required.' });
     }
 
+    const numericClassId = parseInt(class_id, 10);
+
     // Verify class belongs to institution
-    const parentClass = await Class.findByPk(class_id);
+    const parentClass = await Class.findByPk(numericClassId);
     if (!parentClass) {
       return res.status(404).json({ success: false, message: 'Associated Class not found.' });
     }
@@ -478,17 +480,29 @@ const createBatch = async (req, res, next) => {
       return res.status(403).json({ success: false, message: 'Forbidden: Class belongs to another institution.' });
     }
 
-    if (!targetInstId) {
+    if (!targetInstId && parentClass) {
       targetInstId = parentClass.institution_id;
     }
 
+    if (!targetInstId) {
+      const defaultInst = await Institution.findOne({ where: { is_active: true } });
+      if (defaultInst) targetInstId = defaultInst.id;
+    }
+
+    if (!targetInstId) {
+      targetInstId = 1;
+    }
+
+    const parsedStartYear = start_year && !isNaN(parseInt(start_year, 10)) ? parseInt(start_year, 10) : null;
+    const parsedEndYear = end_year && !isNaN(parseInt(end_year, 10)) ? parseInt(end_year, 10) : null;
+
     const newBatch = await Batch.create({
       institution_id: targetInstId,
-      class_id,
+      class_id: numericClassId,
       name: name.trim(),
       code: code ? code.trim() : null,
-      start_year: start_year ? parseInt(start_year, 10) : null,
-      end_year: end_year ? parseInt(end_year, 10) : null,
+      start_year: parsedStartYear,
+      end_year: parsedEndYear,
       is_active: true
     });
 
@@ -497,7 +511,7 @@ const createBatch = async (req, res, next) => {
       action: 'CREATE_BATCH',
       entity_type: 'Batch',
       entity_id: newBatch.id,
-      details: { name: newBatch.name, code: newBatch.code, class_id }
+      details: { name: newBatch.name, code: newBatch.code, class_id: numericClassId }
     });
 
     return res.status(201).json({
@@ -528,17 +542,18 @@ const updateBatch = async (req, res, next) => {
     }
 
     if (class_id) {
-      const parentClass = await Class.findByPk(class_id);
+      const numericClassId = parseInt(class_id, 10);
+      const parentClass = await Class.findByPk(numericClassId);
       if (!parentClass) {
         return res.status(404).json({ success: false, message: 'Associated Class not found.' });
       }
-      batch.class_id = class_id;
+      batch.class_id = numericClassId;
     }
 
     if (name) batch.name = name.trim();
     if (code !== undefined) batch.code = code ? code.trim() : null;
-    if (start_year !== undefined) batch.start_year = start_year ? parseInt(start_year, 10) : null;
-    if (end_year !== undefined) batch.end_year = end_year ? parseInt(end_year, 10) : null;
+    if (start_year !== undefined) batch.start_year = start_year && !isNaN(parseInt(start_year, 10)) ? parseInt(start_year, 10) : null;
+    if (end_year !== undefined) batch.end_year = end_year && !isNaN(parseInt(end_year, 10)) ? parseInt(end_year, 10) : null;
     if (is_active !== undefined) batch.is_active = is_active;
 
     await batch.save();

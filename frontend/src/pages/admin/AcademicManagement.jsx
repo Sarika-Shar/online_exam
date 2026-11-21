@@ -198,7 +198,12 @@ const AcademicManagement = () => {
         }
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to save batch.');
+      const errorMsg =
+        err.response?.data?.message ||
+        (Array.isArray(err.response?.data?.errors) ? err.response.data.errors.join(', ') : null) ||
+        err.message ||
+        'Failed to save batch.';
+      setError(errorMsg);
     } finally {
       setActionLoading(false);
     }
