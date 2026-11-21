@@ -3,6 +3,8 @@ const bcrypt = require('bcryptjs');
 const xlsx = require('xlsx');
 const { User, Student, Class, Batch, Institution, sequelize } = require('../models');
 const { recordAuditLog } = require('../middleware/auditLogger');
+const { sendStudentCredentialsEmail, sendBulkCredentialsEmails } = require('../services/emailService');
+const logger = require('../utils/logger');
 
 /**
  * Get paginated, searchable, and filtered students list
@@ -166,6 +168,15 @@ const createStudent = async (req, res, next) => {
     }, { transaction });
 
     await transaction.commit();
+
+    // Asynchronously dispatch welcome credentials email to the new student
+    sendStudentCredentialsEmail({
+      name: name.trim(),
+      email: email.toLowerCase().trim(),
+      username: generatedUsername,
+      password: password || 'Student@123',
+      studentId: student_id
+    }).catch(e => logger.warn(`Student credential email dispatch notice: ${e.message}`));
 
     await recordAuditLog({
       req,
@@ -368,6 +379,8 @@ const bulkImportStudents = async (req, res, next) => {
         id: student.id,
         name,
         email,
+        username,
+        password: row.password || default_password || 'Student@123',
         student_id: studentId,
         roll_no: student.roll_no,
         class_id: resolvedClassId,
@@ -376,6 +389,9 @@ const bulkImportStudents = async (req, res, next) => {
     }
 
     await transaction.commit();
+
+    // Asynchronously dispatch welcome credentials email to all imported students in batches
+    sendBulkCredentialsEmails(imported).catch(e => logger.warn(`Bulk student email dispatch notice: ${e.message}`));
 
     await recordAuditLog({
       req,
