@@ -229,6 +229,20 @@ const startServer = async () => {
         const { runSeeder } = require('./src/seeders/seed');
         await runSeeder(false, false);
         logger.info('Initial seed completed successfully.');
+      } else {
+        // Sync custom names if previous default seed exists
+        const superAdminUser = await User.findOne({ where: { role: 'super_admin' } });
+        if (superAdminUser && superAdminUser.name !== 'Sarbit Infotech (SuperAdmin)') {
+          await superAdminUser.update({ name: 'Sarbit Infotech (SuperAdmin)' });
+        }
+        const adminUser = await User.findOne({ where: { role: 'institution_admin' } });
+        if (adminUser && adminUser.name !== 'Prof. Bittoo Sharma (Admin)') {
+          await adminUser.update({ name: 'Prof. Bittoo Sharma (Admin)' });
+        }
+        const teacherUser = await User.findOne({ where: { email: 'teacher@apex.edu' } });
+        if (teacherUser && teacherUser.name !== 'Sanjay (CSE Faculty)') {
+          await teacherUser.update({ name: 'Sanjay (CSE Faculty)' });
+        }
       }
     } catch (autoSeedErr) {
       logger.warn(`Auto-seeding check warning: ${autoSeedErr.message}`);

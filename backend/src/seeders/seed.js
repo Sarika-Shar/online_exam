@@ -61,7 +61,7 @@ const runSeeder = async (shouldExit = false, wipe = true) => {
     // 2. Create Users across roles
     // Super Admin (No institution restriction)
     const superAdmin = await User.create({
-      name: 'Dr. Evelyn Carter (Super Admin)',
+      name: 'Sarbit Infotech (SuperAdmin)',
       email: 'superadmin@onlineexam.com',
       username: 'superadmin',
       password_hash: 'SuperAdmin@123',
@@ -73,7 +73,7 @@ const runSeeder = async (shouldExit = false, wipe = true) => {
     // Institution Admin for Apex
     const apexAdmin = await User.create({
       institution_id: apex.id,
-      name: 'Prof. Marcus Vance (Dean/Admin)',
+      name: 'Prof. Bittoo Sharma (Admin)',
       email: 'admin@apex.edu',
       username: 'apex_admin',
       password_hash: 'Admin@123',
@@ -85,7 +85,7 @@ const runSeeder = async (shouldExit = false, wipe = true) => {
     // Teacher for Apex
     const apexTeacher = await User.create({
       institution_id: apex.id,
-      name: 'Sarah Jenkins (CSE Faculty)',
+      name: 'Sanjay (CSE Faculty)',
       email: 'teacher@apex.edu',
       username: 'apex_teacher',
       password_hash: 'Teacher@123',
