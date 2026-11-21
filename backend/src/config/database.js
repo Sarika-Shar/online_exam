@@ -3,7 +3,7 @@ const path = require('path');
 const logger = require('../utils/logger');
 require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
 
-const dialect = process.env.DB_DIALECT || 'mysql';
+const dialect = process.env.DB_DIALECT || (process.env.DB_HOST ? 'mysql' : 'sqlite');
 let sequelize;
 
 const commonOptions = {
