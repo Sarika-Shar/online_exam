@@ -17,11 +17,15 @@ const {
 } = require('../models');
 const logger = require('../utils/logger');
 
-const runSeeder = async () => {
+const runSeeder = async (shouldExit = false, wipe = true) => {
   try {
     logger.info('Starting Database Seeder...');
-    await sequelize.sync({ force: true });
-    logger.info('Database tables wiped and recreated cleanly.');
+    if (wipe) {
+      await sequelize.sync({ force: true });
+      logger.info('Database tables wiped and recreated cleanly.');
+    } else {
+      await sequelize.sync({ alter: false });
+    }
 
     // 1. Create Institutions
     const apex = await Institution.create({
@@ -342,11 +346,20 @@ const runSeeder = async () => {
     logger.info('4. Student:           student1@apex.edu        / Student@123');
     logger.info('========================================================');
 
-    process.exit(0);
+    if (shouldExit) {
+      process.exit(0);
+    }
   } catch (error) {
     logger.error('Database seeding failed:', error);
-    process.exit(1);
+    if (shouldExit) {
+      process.exit(1);
+    }
+    throw error;
   }
 };
 
-runSeeder();
+if (require.main === module) {
+  runSeeder(true);
+}
+
+module.exports = { runSeeder };

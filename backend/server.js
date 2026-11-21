@@ -220,6 +220,20 @@ const startServer = async () => {
 
     logger.info('Database models synchronized successfully.');
 
+    // Auto-seed if running on a fresh SQLite/database with no users
+    try {
+      const { User } = require('./src/models');
+      const userCount = await User.count();
+      if (userCount === 0) {
+        logger.info('Empty database detected. Auto-seeding initial users and institutions...');
+        const { runSeeder } = require('./src/seeders/seed');
+        await runSeeder(false, false);
+        logger.info('Initial seed completed successfully.');
+      }
+    } catch (autoSeedErr) {
+      logger.warn(`Auto-seeding check warning: ${autoSeedErr.message}`);
+    }
+
     // Initialize Phase 6 background exam expiry job
     const { startExpiryJob } = require('./src/jobs/examExpiryJob');
     startExpiryJob(io, 30000);
