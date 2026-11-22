@@ -81,20 +81,20 @@ const ExamInstructions = () => {
         </p>
 
         {/* Assessment Parameters Grid */}
-        <div className="row g-2 text-center py-3 bg-light rounded-3 border small">
-          <div className="col-6 col-md-3 border-end">
+        <div className="row g-2 text-center py-2.5 py-sm-3 bg-light rounded-3 border small">
+          <div className="col-6 col-sm-3 border-end">
             <span className="text-muted d-block" style={{ fontSize: '0.72rem' }}>Total Duration</span>
-            <strong className="text-dark fs-6">{exam?.duration_minutes} Minutes</strong>
+            <strong className="text-dark fs-6">{exam?.duration_minutes} Mins</strong>
           </div>
-          <div className="col-6 col-md-3 border-end">
+          <div className="col-6 col-sm-3 border-end-sm">
             <span className="text-muted d-block" style={{ fontSize: '0.72rem' }}>Questions</span>
             <strong className="text-dark fs-6">{exam?.total_questions} MCQs</strong>
           </div>
-          <div className="col-6 col-md-3 border-end">
+          <div className="col-6 col-sm-3 border-end pt-2 pt-sm-0">
             <span className="text-muted d-block" style={{ fontSize: '0.72rem' }}>Total Marks</span>
             <strong className="text-primary fs-6">{exam?.total_marks} Marks</strong>
           </div>
-          <div className="col-6 col-md-3">
+          <div className="col-6 col-sm-3 pt-2 pt-sm-0">
             <span className="text-muted d-block" style={{ fontSize: '0.72rem' }}>Negative Penalty</span>
             <strong className="text-danger fs-6">-{exam?.negative_marking} Marks</strong>
           </div>
@@ -102,20 +102,20 @@ const ExamInstructions = () => {
       </div>
 
       {/* Candidate Verification Card */}
-      <div className="card-custom bg-white p-4 mb-4">
-        <h5 className="fw-bold text-dark mb-3">
+      <div className="card-custom bg-white p-3 p-sm-4 mb-4">
+        <h5 className="fw-bold text-dark mb-3 fs-6 fs-sm-5">
           <i className="bi bi-person-check-fill text-primary me-2"></i> Verified Candidate Credentials
         </h5>
         <div className="row g-2 small">
-          <div className="col-md-4">
+          <div className="col-12 col-sm-4">
             <span className="text-muted">Candidate Name:</span>
             <div className="fw-bold text-dark">{student?.name}</div>
           </div>
-          <div className="col-md-4">
+          <div className="col-12 col-sm-4">
             <span className="text-muted">Student ID:</span>
             <div className="fw-bold text-dark">{student?.student_id}</div>
           </div>
-          <div className="col-md-4">
+          <div className="col-12 col-sm-4">
             <span className="text-muted">Roll Number:</span>
             <div className="fw-bold text-dark">{student?.roll_no || 'Assigned'}</div>
           </div>
@@ -123,8 +123,8 @@ const ExamInstructions = () => {
       </div>
 
       {/* Rules & Guidelines Card */}
-      <div className="card-custom bg-white p-4 mb-4">
-        <h5 className="fw-bold text-dark mb-3">
+      <div className="card-custom bg-white p-3 p-sm-4 mb-4">
+        <h5 className="fw-bold text-dark mb-3 fs-6 fs-sm-5">
           <i className="bi bi-journal-text text-primary me-2"></i> Examination Rules & Instructions
         </h5>
 
@@ -150,7 +150,7 @@ const ExamInstructions = () => {
       </div>
 
       {/* Mandatory Checkbox & Launch Button */}
-      <div className="card-custom bg-white p-4 shadow-sm border-2 border-primary">
+      <div className="card-custom bg-white p-3 p-sm-4 shadow-sm border-2 border-primary">
         <div className="form-check mb-4">
           <input
             className="form-check-input"
@@ -164,13 +164,13 @@ const ExamInstructions = () => {
           </label>
         </div>
 
-        <div className="d-flex justify-content-between align-items-center">
-          <Link to="/student/exams" className="btn btn-outline-secondary">
+        <div className="d-flex flex-column-reverse flex-sm-row justify-content-between align-items-stretch align-items-sm-center gap-2">
+          <Link to="/student/exams" className="btn btn-outline-secondary text-center">
             <i className="bi bi-arrow-left me-1"></i> Return to Portal
           </Link>
 
           <button
-            className="btn btn-success btn-lg fw-bold px-5 shadow-sm d-flex align-items-center gap-2"
+            className="btn btn-success btn-lg fw-bold px-4 px-sm-5 shadow-sm d-flex align-items-center justify-content-center gap-2"
             disabled={!acknowledged}
             onClick={handleStartExam}
           >

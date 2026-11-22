@@ -130,9 +130,9 @@ const CertificateManagement = () => {
         </div>
 
         {/* Global Action Buttons */}
-        <div className="d-flex flex-wrap align-items-center gap-2">
+        <div className="d-flex flex-wrap align-items-center gap-2 w-100 w-md-auto">
           <button
-            className="btn btn-outline-secondary btn-sm shadow-sm d-flex align-items-center gap-1"
+            className="btn btn-outline-secondary btn-sm shadow-sm d-flex align-items-center justify-content-center gap-1 flex-grow-1 flex-sm-grow-0"
             onClick={() => {
               setVerifyUuid('');
               setVerifyResult(null);
@@ -144,7 +144,7 @@ const CertificateManagement = () => {
           </button>
 
           <button
-            className="btn btn-primary btn-sm shadow-sm fw-bold d-flex align-items-center gap-2"
+            className="btn btn-primary btn-sm shadow-sm fw-bold d-flex align-items-center justify-content-center gap-2 flex-grow-1 flex-sm-grow-0"
             onClick={() => setShowGenModal(true)}
             disabled={!selectedExamId}
           >

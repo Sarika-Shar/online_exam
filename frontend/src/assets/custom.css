@@ -18,15 +18,51 @@
   --border-radius-lg: 16px;
   --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
   --box-shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+  --target-size: 28px;
 }
 
-body {
+@media (pointer: coarse) {
+  :root {
+    --target-size: 44px;
+  }
+}
+
+html, body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   background-color: var(--body-bg);
   color: var(--text-main);
   min-height: 100vh;
+  min-height: 100dvh;
   margin: 0;
   -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+  overflow-x: clip;
+  max-width: 100vw;
+  width: 100%;
+  overflow-wrap: break-word;
+}
+
+#root {
+  min-height: 100vh;
+  min-height: 100dvh;
+  max-width: 100vw;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+/* Ensure images and media never overflow their container */
+img, video {
+  max-inline-size: 100%;
+  block-size: auto;
+}
+
+/* Touch-friendly target sizing on mobile */
+@media (pointer: coarse) {
+  .btn, .form-control, .form-select, .sidebar-link {
+    min-block-size: 38px;
+  }
 }
 
 /* Custom Scrollbar */
@@ -52,6 +88,8 @@ body {
   border-radius: var(--border-radius-md);
   box-shadow: var(--box-shadow);
   transition: all 0.2s ease-in-out;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .card-custom:hover {
@@ -68,6 +106,21 @@ body {
   position: relative;
   overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  min-width: 0;
+  max-width: 100%;
+}
+
+@media (max-width: 575.98px) {
+  .stat-card {
+    padding: 0.75rem 0.75rem;
+  }
+}
+
+/* Ensure canvas charts never overflow container */
+.chart-container,
+.chart-container canvas {
+  max-width: 100% !important;
+  width: 100% !important;
 }
 
 .stat-card:hover {
@@ -89,20 +142,21 @@ body {
 .app-sidebar {
   width: 260px;
   min-height: 100vh;
+  min-height: 100dvh;
   background-color: var(--sidebar-bg);
   color: #e2e8f0;
-  transition: width 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
-  z-index: 1030;
+  z-index: 1045;
   display: flex;
   flex-direction: column;
 }
 
 .sidebar-brand {
-  padding: 1.25rem 1.5rem;
+  padding: 1.15rem 1.25rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   font-size: 1.15rem;
   font-weight: 700;
@@ -117,6 +171,7 @@ body {
   padding: 1rem 0.75rem;
   flex-grow: 1;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .sidebar-link {
@@ -158,20 +213,28 @@ body {
 .main-wrapper {
   margin-left: 260px;
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   transition: margin-left 0.3s ease;
+  min-width: 0;
+  max-width: 100%;
 }
 
 @media (max-width: 991.98px) {
   .app-sidebar {
-    margin-left: -260px;
+    width: min(280px, 85vw);
+    margin-left: calc(-1 * min(280px, 85vw));
   }
   .app-sidebar.show {
     margin-left: 0;
+    box-shadow: 0 0 35px rgba(0, 0, 0, 0.5);
   }
   .main-wrapper {
     margin-left: 0;
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
   }
 }
 
@@ -179,8 +242,8 @@ body {
 .top-navbar {
   background: #ffffff;
   border-bottom: 1px solid var(--border-color);
-  height: 64px;
-  padding: 0 1.5rem;
+  min-height: 60px;
+  padding: 0 1.25rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -189,9 +252,17 @@ body {
   z-index: 1020;
 }
 
+@media (max-width: 575.98px) {
+  .top-navbar {
+    padding: 0 0.75rem;
+    min-height: 54px;
+  }
+}
+
 /* Login Page Styling */
 .auth-container {
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -228,6 +299,16 @@ body {
     0 8px 24px -4px rgba(15, 23, 42, 0.12);
   padding: 2.75rem 2.5rem;
   border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+@media (max-width: 575.98px) {
+  .auth-container {
+    padding: 1.25rem 0.75rem;
+  }
+  .auth-card {
+    padding: 1.75rem 1.15rem;
+    border-radius: 1rem;
+  }
 }
 
 /* Badge styling */
@@ -299,3 +380,107 @@ body {
   border-bottom: 1px solid var(--border-color);
   font-size: 0.9rem;
 }
+
+/* =========================================================
+   MOBILE RESPONSIVE ENHANCEMENTS & MODERN LAYOUT ADAPTATIONS
+   ========================================================= */
+
+/* Fluid container padding */
+.container-fluid {
+  padding-left: clamp(0.75rem, 2.5vw, 1.5rem) !important;
+  padding-right: clamp(0.75rem, 2.5vw, 1.5rem) !important;
+}
+
+/* Responsive cards & stat cards */
+@media (max-width: 575.98px) {
+  .card-custom {
+    padding: 1rem !important;
+    border-radius: var(--border-radius-sm);
+  }
+  .stat-card {
+    padding: 0.9rem 1rem !important;
+  }
+  .stat-icon-wrapper {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 1.25rem !important;
+    border-radius: 8px !important;
+  }
+}
+
+/* Responsive Modals */
+@media (max-width: 575.98px) {
+  .modal-dialog {
+    margin: 0.5rem auto !important;
+    max-width: calc(100vw - 1rem) !important;
+  }
+  .modal-content {
+    border-radius: var(--border-radius-md) !important;
+  }
+  .modal-body {
+    padding: 1.15rem !important;
+  }
+  .modal-header, .modal-footer {
+    padding: 0.85rem 1.15rem !important;
+  }
+}
+
+/* Smooth Touch Scrolling on all Tables */
+.table-responsive {
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 0;
+}
+
+/* Mobile Exam Hall Offcanvas Bottom Drawer */
+.exam-palette-drawer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  z-index: 1060;
+  max-height: 82vh;
+  max-height: 82dvh;
+  border-top-left-radius: 1.25rem;
+  border-top-right-radius: 1.25rem;
+  box-shadow: 0 -10px 40px rgba(15, 23, 42, 0.25);
+  transform: translateY(105%);
+  transition: transform 0.3s cubic-bezier(0.32, 1, 0.23, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.exam-palette-drawer.open {
+  transform: translateY(0);
+}
+
+.exam-palette-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  z-index: 1055;
+  transition: opacity 0.2s ease;
+}
+
+/* Exam Options Mobile Touch Target */
+.exam-option-card {
+  min-height: 48px;
+  touch-action: manipulation;
+  transition: all 0.15s ease-in-out;
+  cursor: pointer;
+}
+
+.exam-option-card:active {
+  transform: scale(0.99);
+}
+
+/* Floating Anti-Leak Capsule Mobile Bounds */
+@media (max-width: 768px) {
+  .floating-anti-leak-capsule {
+    max-width: calc(100vw - 24px) !important;
+    font-size: 0.64rem !important;
+  }
+}
+

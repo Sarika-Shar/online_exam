@@ -42,6 +42,7 @@ const ExamHall = () => {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionResult, setSubmissionResult] = useState(null);
+  const [showMobilePalette, setShowMobilePalette] = useState(false);
 
   // AI Proctor Surveillance State
   const [attemptId, setAttemptId] = useState(null);
@@ -846,18 +847,18 @@ const ExamHall = () => {
   // SUBMISSION SUCCESS CARD
   if (submissionResult) {
     return (
-      <div className="vh-100 d-flex align-items-center justify-content-center bg-light p-3">
-        <div className="card-custom bg-white p-5 text-center shadow-lg" style={{ maxWidth: '620px' }}>
+      <div className="min-vh-100 d-flex align-items-center justify-content-center bg-light p-3 py-4 py-sm-5">
+        <div className="card-custom bg-white p-3 p-sm-4 p-md-5 text-center shadow-lg w-100" style={{ maxWidth: '620px' }}>
           <div
             className={`rounded-circle d-inline-flex align-items-center justify-content-center mb-3 shadow ${
               submissionResult.isPassed ? 'bg-success text-white' : 'bg-primary text-white'
             }`}
-            style={{ width: '80px', height: '80px', fontSize: '2.5rem' }}
+            style={{ width: '72px', height: '72px', fontSize: '2.2rem' }}
           >
             <i className={`bi ${submissionResult.isAuto ? 'bi-stopwatch-fill' : 'bi-check2-circle'}`}></i>
           </div>
 
-          <h3 className="fw-bold text-dark mb-1">
+          <h3 className="fw-bold text-dark mb-1 fs-4 fs-sm-3">
             {submissionResult.isAuto ? 'Time Expired: Examination Auto-Submitted' : 'Examination Submitted Successfully!'}
           </h3>
           <p className="text-muted small mb-4">
@@ -868,45 +869,45 @@ const ExamHall = () => {
 
           {/* Detailed Score Breakdown */}
           <div className="row g-2 p-3 bg-light rounded-3 mb-4 text-center border">
-            <div className="col-3 border-end">
+            <div className="col-6 col-sm-3 border-end">
               <span className="text-muted d-block small" style={{ fontSize: '0.72rem' }}>Total MCQs</span>
               <strong className="fs-5 text-dark">{submissionResult.totalQuestions}</strong>
             </div>
-            <div className="col-3 border-end">
+            <div className="col-6 col-sm-3 border-end-sm">
               <span className="text-muted d-block small" style={{ fontSize: '0.72rem' }}>Attempted</span>
               <strong className="fs-5 text-primary">{submissionResult.attempted}</strong>
             </div>
-            <div className="col-3 border-end">
+            <div className="col-6 col-sm-3 border-end pt-2 pt-sm-0">
               <span className="text-muted d-block small" style={{ fontSize: '0.72rem' }}>Correct</span>
               <strong className="fs-5 text-success">{submissionResult.correct}</strong>
             </div>
-            <div className="col-3">
+            <div className="col-6 col-sm-3 pt-2 pt-sm-0">
               <span className="text-muted d-block small" style={{ fontSize: '0.72rem' }}>Wrong</span>
               <strong className="fs-5 text-danger">{submissionResult.wrong}</strong>
             </div>
           </div>
 
           {/* Marks & Percentage Banner */}
-          <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-white border mb-4">
+          <div className="d-flex flex-wrap justify-content-between align-items-center gap-2 p-3 rounded-3 bg-white border mb-4 text-start">
             <div>
               <span className="text-muted small d-block">Total Marks Obtained</span>
-              <h4 className="fw-bold text-dark mb-0">
+              <h4 className="fw-bold text-dark mb-0 fs-5 fs-sm-4">
                 {submissionResult.marksObtained} <span className="text-muted fs-6">/ {submissionResult.maxMarks}</span>
               </h4>
             </div>
-            <div className="text-end">
+            <div>
               <span className="text-muted small d-block">Percentage</span>
-              <h4 className="fw-bold text-primary mb-0">{submissionResult.percentage}%</h4>
+              <h4 className="fw-bold text-primary mb-0 fs-5 fs-sm-4">{submissionResult.percentage}%</h4>
             </div>
             <div>
               <span className="text-muted small d-block">Status</span>
-              <span className={`badge fs-6 ${submissionResult.isPassed ? 'bg-success' : 'bg-danger'}`}>
+              <span className={`badge ${submissionResult.isPassed ? 'bg-success' : 'bg-danger'}`}>
                 {submissionResult.isPassed ? 'PASSED' : 'NEEDS IMPROVEMENT'}
               </span>
             </div>
           </div>
 
-          <div className="d-flex justify-content-center gap-3">
+          <div className="d-flex flex-column flex-sm-row justify-content-center gap-2 gap-sm-3">
             <button className="btn btn-primary px-4 py-2 fw-semibold" onClick={() => navigate('/student/dashboard')}>
               <i className="bi bi-house-door-fill me-1"></i> Return to Dashboard
             </button>
@@ -1037,8 +1038,9 @@ const ExamHall = () => {
       )}
 
       {/* TOP BAR: Title, Countdown Timer, Autosave Status & Final Submit */}
-      <header className="bg-white border-bottom shadow-sm px-3 py-2 sticky-top" style={{ zIndex: 1040 }}>
-        <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
+      <header className="bg-white border-bottom shadow-sm px-2 px-sm-3 py-2 sticky-top" style={{ zIndex: 1040 }}>
+        {/* DESKTOP LAYOUT (md and up) */}
+        <div className="d-none d-md-flex justify-content-between align-items-center gap-2">
           {/* Exam Title & Subject */}
           <div className="d-flex align-items-center gap-2">
             <span className="badge bg-primary px-2 py-1">Exam Hall</span>
@@ -1081,7 +1083,7 @@ const ExamHall = () => {
 
           {/* Right: Autosave Status & Submit Button */}
           <div className="d-flex align-items-center gap-3">
-            <div className="small text-muted d-none d-md-flex align-items-center gap-1">
+            <div className="small text-muted d-flex align-items-center gap-1">
               {autosaveStatus === 'saving' && (
                 <>
                   <span className="spinner-border spinner-border-sm text-primary" role="status"></span>
@@ -1124,24 +1126,118 @@ const ExamHall = () => {
             </button>
           </div>
         </div>
+
+        {/* MOBILE COMPACT HEADER (sm and down) */}
+        <div className="d-flex d-md-none flex-column gap-1.5">
+          <div className="d-flex align-items-center justify-content-between gap-2">
+            {/* Title & Badge */}
+            <div className="d-flex align-items-center gap-1 overflow-hidden" style={{ minWidth: 0 }}>
+              <span className="badge bg-primary px-1.5 py-1 flex-shrink-0" style={{ fontSize: '0.7rem' }}>Exam</span>
+              <span className="fw-bold text-dark text-truncate small" style={{ maxWidth: '120px' }}>
+                {exam?.title}
+              </span>
+            </div>
+
+            {/* Countdown Timer Badge */}
+            <div
+              className={`d-flex align-items-center gap-1 px-2 py-0.5 rounded-pill fw-bold border flex-shrink-0 ${
+                isPaused
+                  ? 'bg-warning text-dark border-warning'
+                  : isTimerCritical
+                  ? 'bg-danger text-white border-danger'
+                  : isTimerLow
+                  ? 'bg-warning-subtle text-danger border-warning'
+                  : 'bg-light text-dark'
+              }`}
+              style={{ fontSize: '0.9rem', letterSpacing: '0.04em' }}
+            >
+              <i className={`bi ${isPaused ? 'bi-pause-circle-fill' : isTimerCritical ? 'bi-alarm-fill' : 'bi-stopwatch text-primary'}`}></i>
+              <span>{isPaused ? 'PAUSED' : formatTime(remainingSeconds)}</span>
+            </div>
+
+            {/* Mobile Actions: Palette & Submit */}
+            <div className="d-flex align-items-center gap-1 flex-shrink-0">
+              <button
+                type="button"
+                className="btn btn-outline-primary btn-sm px-2 py-1 fw-semibold d-flex align-items-center gap-1"
+                onClick={() => setShowMobilePalette(true)}
+                title="Open Question Palette"
+                style={{ fontSize: '0.78rem' }}
+              >
+                <i className="bi bi-grid-3x3-gap-fill"></i>
+                <span>{answeredCount}/{questions.length}</span>
+              </button>
+
+              <button
+                className="btn btn-danger btn-sm fw-bold px-2 py-1 shadow-sm d-flex align-items-center gap-1"
+                onClick={() => setShowConfirmModal(true)}
+                disabled={isSubmitting || isPaused}
+                style={{ fontSize: '0.78rem' }}
+              >
+                <i className="bi bi-box-arrow-right"></i>
+                <span>Submit</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Mobile Autosave Status Strip */}
+          <div className="d-flex align-items-center justify-content-between pt-1 border-top" style={{ fontSize: '0.72rem' }}>
+            <div className="d-flex align-items-center gap-1 text-muted">
+              {autosaveStatus === 'saving' && (
+                <>
+                  <span className="spinner-border spinner-border-sm text-primary" style={{ width: '10px', height: '10px' }} role="status"></span>
+                  <span className="text-primary">Autosaving...</span>
+                </>
+              )}
+              {autosaveStatus === 'saved' && (
+                <>
+                  <i className="bi bi-cloud-check-fill text-success"></i>
+                  <span className="text-success fw-medium">All answers saved</span>
+                </>
+              )}
+              {autosaveStatus === 'offline_saved' && (
+                <>
+                  <i className="bi bi-hdd-fill text-warning"></i>
+                  <span className="text-warning fw-medium">Offline saved</span>
+                </>
+              )}
+              {autosaveStatus === 'syncing' && (
+                <>
+                  <span className="spinner-border spinner-border-sm text-info" style={{ width: '10px', height: '10px' }} role="status"></span>
+                  <span className="text-info fw-medium">Syncing...</span>
+                </>
+              )}
+              {autosaveStatus === 'error' && (
+                <>
+                  <i className="bi bi-cloud-slash-fill text-danger"></i>
+                  <span className="text-danger fw-semibold">Retrying...</span>
+                </>
+              )}
+            </div>
+
+            <div className="text-muted">
+              Q <strong className="text-dark">{currentIndex + 1}</strong> of {questions.length}
+            </div>
+          </div>
+        </div>
       </header>
 
       {/* MAIN EXAM ARENA: Two Column Grid */}
-      <div className="container-fluid flex-grow-1 py-3 px-3 px-md-4">
+      <div className="container-fluid flex-grow-1 py-2 py-sm-3 px-2 px-sm-3 px-md-4">
         <div className="row g-3 h-100">
           {/* LEFT / CENTER: Question Statement & Options */}
           <div className="col-12 col-lg-8 col-xl-9 d-flex flex-column">
-            <div className="card-custom bg-white p-4 flex-grow-1 d-flex flex-column shadow-sm">
+            <div className="card-custom bg-white p-3 p-sm-4 flex-grow-1 d-flex flex-column shadow-sm">
               {/* Question Header */}
-              <div className="d-flex justify-content-between align-items-center pb-3 mb-3 border-bottom">
-                <div className="d-flex align-items-center gap-2">
-                  <span className="badge bg-primary fs-6 px-3 py-1">
+              <div className="d-flex flex-wrap justify-content-between align-items-center gap-2 pb-2.5 mb-3 border-bottom">
+                <div className="d-flex flex-wrap align-items-center gap-1.5 gap-sm-2">
+                  <span className="badge bg-primary px-2.5 py-1" style={{ fontSize: '0.85rem' }}>
                     Question {currentIndex + 1} of {questions.length}
                   </span>
                   <span className="badge bg-light text-secondary border small">
                     Marks: +{currentQ.marks || exam?.marks_per_question} / -{currentQ.negative_marks || exam?.negative_marking}
                   </span>
-                  <span className="badge bg-light text-secondary border small">
+                  <span className="badge bg-light text-secondary border small d-none d-sm-inline-block">
                     Topic: {currentQ.topic || 'General'}
                   </span>
                 </div>
@@ -1154,42 +1250,41 @@ const ExamHall = () => {
               </div>
 
               {/* Question Text */}
-              <div className="mb-4">
-                <h5 className="fw-semibold text-dark lh-base" style={{ fontSize: '1.15rem' }}>
+              <div className="mb-3 mb-sm-4">
+                <h5 className="fw-semibold text-dark lh-base" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.15rem)', wordBreak: 'break-word' }}>
                   {currentQ.question_text}
                 </h5>
               </div>
 
               {/* 4 Interactive Option Cards */}
-              <div className="vstack gap-3 mb-4">
+              <div className="vstack gap-2.5 gap-sm-3 mb-3 mb-sm-4">
                 {currentQ.options?.map((opt) => {
                   const isSelected = currentSelectedKey === opt.option_key;
 
                   return (
                     <div
                       key={opt.option_key}
-                      className={`p-3 rounded-3 border transition cursor-pointer d-flex align-items-center gap-3 ${
+                      className={`exam-option-card p-2.5 p-sm-3 rounded-3 border d-flex align-items-center gap-2.5 gap-sm-3 ${
                         isSelected
                           ? 'border-primary bg-primary-subtle bg-opacity-25 shadow-sm'
                           : 'bg-white hover-bg-light'
                       }`}
                       onClick={() => handleSelectOption(opt.option_key)}
-                      style={{ cursor: 'pointer', transition: 'all 0.15s ease' }}
                     >
                       <div
                         className={`rounded-circle d-flex align-items-center justify-content-center fw-bold ${
                           isSelected ? 'bg-primary text-white' : 'bg-light text-secondary border'
                         }`}
-                        style={{ width: '36px', height: '36px', flexShrink: 0 }}
+                        style={{ width: '34px', height: '34px', flexShrink: 0, fontSize: '0.9rem' }}
                       >
                         {opt.option_key}
                       </div>
 
-                      <div className="flex-grow-1 text-dark fw-medium" style={{ fontSize: '0.96rem' }}>
+                      <div className="flex-grow-1 text-dark fw-medium" style={{ fontSize: '0.94rem', minWidth: 0, wordBreak: 'break-word' }}>
                         {opt.option_text}
                       </div>
 
-                      <div className="form-check me-2">
+                      <div className="form-check me-1 flex-shrink-0">
                         <input
                           className="form-check-input"
                           type="radio"
@@ -1206,7 +1301,7 @@ const ExamHall = () => {
 
               {/* Clear Answer Button */}
               {currentSelectedKey && (
-                <div className="mb-4">
+                <div className="mb-3">
                   <button className="btn btn-link text-danger btn-sm p-0 text-decoration-none" onClick={handleClearOption}>
                     <i className="bi bi-x-circle me-1"></i> Clear Selection
                   </button>
@@ -1214,29 +1309,47 @@ const ExamHall = () => {
               )}
 
               {/* Navigation Footer Controls */}
-              <div className="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
+              <div className="mt-auto pt-3 border-top d-flex flex-wrap justify-content-between align-items-center gap-2">
                 <button
-                  className="btn btn-outline-secondary px-3 d-flex align-items-center gap-1"
+                  className="btn btn-outline-secondary px-2.5 px-sm-3 d-flex align-items-center gap-1"
                   disabled={currentIndex === 0}
                   onClick={() => setCurrentIndex(currentIndex - 1)}
+                  style={{ minHeight: '38px' }}
                 >
-                  <i className="bi bi-chevron-left"></i> Previous
+                  <i className="bi bi-chevron-left"></i>
+                  <span className="d-none d-sm-inline">Previous</span>
+                  <span className="d-sm-none">Prev</span>
                 </button>
 
-                <button
-                  className={`btn ${
-                    isCurrentMarkedForReview ? 'btn-warning text-dark fw-bold' : 'btn-outline-warning text-dark'
-                  } d-flex align-items-center gap-1`}
-                  onClick={handleToggleReview}
-                >
-                  <i className={`bi ${isCurrentMarkedForReview ? 'bi-bookmark-check-fill' : 'bi-bookmark'}`}></i>
-                  <span>{isCurrentMarkedForReview ? 'Marked for Review' : 'Mark for Review'}</span>
-                </button>
+                <div className="d-flex align-items-center gap-1.5 gap-sm-2">
+                  <button
+                    type="button"
+                    className="btn btn-outline-primary d-lg-none d-flex align-items-center gap-1 px-2.5"
+                    onClick={() => setShowMobilePalette(true)}
+                    style={{ minHeight: '38px', fontSize: '0.88rem' }}
+                  >
+                    <i className="bi bi-grid-3x3-gap"></i>
+                    <span>Palette</span>
+                  </button>
+
+                  <button
+                    className={`btn ${
+                      isCurrentMarkedForReview ? 'btn-warning text-dark fw-bold' : 'btn-outline-warning text-dark'
+                    } d-flex align-items-center gap-1 px-2.5 px-sm-3`}
+                    onClick={handleToggleReview}
+                    style={{ minHeight: '38px', fontSize: '0.88rem' }}
+                  >
+                    <i className={`bi ${isCurrentMarkedForReview ? 'bi-bookmark-check-fill' : 'bi-bookmark'}`}></i>
+                    <span className="d-none d-sm-inline">{isCurrentMarkedForReview ? 'Marked for Review' : 'Mark for Review'}</span>
+                    <span className="d-sm-none">{isCurrentMarkedForReview ? 'Marked' : 'Review'}</span>
+                  </button>
+                </div>
 
                 <button
-                  className="btn btn-primary px-4 fw-semibold d-flex align-items-center gap-1"
+                  className="btn btn-primary px-3 px-sm-4 fw-semibold d-flex align-items-center gap-1"
                   disabled={currentIndex === questions.length - 1}
                   onClick={() => setCurrentIndex(currentIndex + 1)}
+                  style={{ minHeight: '38px' }}
                 >
                   <span>Next</span>
                   <i className="bi bi-chevron-right"></i>
@@ -1367,17 +1480,124 @@ const ExamHall = () => {
         </div>
       </div>
 
+      {/* MOBILE QUESTION PALETTE BOTTOM DRAWER */}
+      {showMobilePalette && (
+        <div
+          className="exam-palette-backdrop d-lg-none"
+          onClick={() => setShowMobilePalette(false)}
+        />
+      )}
+      <div className={`exam-palette-drawer d-lg-none ${showMobilePalette ? 'open' : ''}`}>
+        <div className="p-3 border-bottom d-flex align-items-center justify-content-between bg-light rounded-top-4">
+          <div className="d-flex align-items-center gap-2">
+            <i className="bi bi-grid-3x3-gap-fill text-primary fs-5"></i>
+            <div>
+              <h6 className="fw-bold text-dark mb-0">Question Palette</h6>
+              <small className="text-muted" style={{ fontSize: '0.72rem' }}>
+                Tap any question number to navigate
+              </small>
+            </div>
+          </div>
+          <button
+            type="button"
+            className="btn btn-sm btn-light border rounded-circle p-0 d-flex align-items-center justify-content-center"
+            onClick={() => setShowMobilePalette(false)}
+            aria-label="Close Palette"
+            style={{ width: '32px', height: '32px' }}
+          >
+            <i className="bi bi-x-lg"></i>
+          </button>
+        </div>
+
+        {/* Legend */}
+        <div className="px-3 pt-2 pb-2 border-bottom text-muted" style={{ fontSize: '0.74rem' }}>
+          <div className="row g-2">
+            <div className="col-6 d-flex align-items-center gap-1.5">
+              <span className="badge bg-success rounded-circle p-1"> </span>
+              <span>Answered ({answeredCount})</span>
+            </div>
+            <div className="col-6 d-flex align-items-center gap-1.5">
+              <span className="badge bg-warning text-dark rounded-circle p-1"> </span>
+              <span>Review ({markedForReviewCount})</span>
+            </div>
+            <div className="col-6 d-flex align-items-center gap-1.5">
+              <span className="badge bg-light text-dark border rounded-circle p-1"> </span>
+              <span>Unanswered ({unansweredCount})</span>
+            </div>
+            <div className="col-6 d-flex align-items-center gap-1.5">
+              <span className="badge bg-primary rounded-circle p-1"> </span>
+              <span>Current Question</span>
+            </div>
+          </div>
+        </div>
+
+        {/* 2D Interactive Question Grid */}
+        <div className="p-3 overflow-auto flex-grow-1" style={{ maxHeight: '55vh' }}>
+          <div className="row g-2">
+            {questions.map((q, idx) => {
+              const isAnswered = !!answers[q.id]?.selected_option_key;
+              const isReviewed = !!answers[q.id]?.is_marked_for_review;
+              const isCurrent = idx === currentIndex;
+
+              let btnClass = 'btn-light text-dark border';
+              if (isReviewed) {
+                btnClass = 'btn-warning text-dark fw-bold border-warning';
+              } else if (isAnswered) {
+                btnClass = 'btn-success text-white border-success';
+              }
+
+              return (
+                <div key={q.id} className="col-3 col-sm-2">
+                  <button
+                    type="button"
+                    className={`btn w-100 p-2 fw-bold position-relative ${btnClass} ${
+                      isCurrent ? 'ring-primary border-primary border-3 shadow-sm' : ''
+                    }`}
+                    style={{
+                      fontSize: '0.9rem',
+                      minHeight: '42px',
+                      outline: isCurrent ? '2px solid #2563eb' : 'none',
+                      outlineOffset: '1px'
+                    }}
+                    onClick={() => {
+                      setCurrentIndex(idx);
+                      setShowMobilePalette(false);
+                    }}
+                  >
+                    {idx + 1}
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="p-2.5 p-sm-3 border-top bg-light">
+          <button
+            className="btn btn-danger w-100 py-2 fw-bold d-flex align-items-center justify-content-center gap-2 shadow-sm"
+            onClick={() => {
+              setShowMobilePalette(false);
+              setShowConfirmModal(true);
+            }}
+            disabled={isSubmitting || isPaused}
+          >
+            <i className="bi bi-box-arrow-right"></i>
+            <span>Submit Final Examination</span>
+          </button>
+        </div>
+      </div>
+
       {/* CONFIRMATION SUBMISSION MODAL */}
       {showConfirmModal && (
         <div className="modal fade show d-block" style={{ backgroundColor: 'rgba(15, 23, 42, 0.6)' }} tabIndex="-1">
-          <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-dialog modal-dialog-centered mx-2 mx-sm-auto">
             <div className="modal-content border-0 shadow-lg rounded-4">
               <div className="modal-header border-bottom py-3">
-                <h5 className="modal-title fw-bold text-dark">Confirm Final Submission</h5>
+                <h5 className="modal-title fw-bold text-dark fs-5">Confirm Final Submission</h5>
                 <button type="button" className="btn-close" onClick={() => setShowConfirmModal(false)}></button>
               </div>
 
-              <div className="modal-body p-4 text-center">
+              <div className="modal-body p-3 p-sm-4 text-center">
                 <i className="bi bi-question-circle-fill text-warning display-4 d-block mb-3"></i>
                 <h5 className="fw-bold text-dark mb-2">Ready to submit your examination?</h5>
                 <p className="text-muted small mb-4">
@@ -1408,7 +1628,7 @@ const ExamHall = () => {
                 )}
               </div>
 
-              <div className="modal-footer border-top py-2 d-flex justify-content-between">
+              <div className="modal-footer border-top py-2.5 d-flex justify-content-between align-items-center">
                 <button
                   type="button"
                   className="btn btn-outline-secondary btn-sm px-3"

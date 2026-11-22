@@ -172,22 +172,22 @@ const StudentResults = () => {
   return (
     <div className="container-fluid py-4 px-3 px-md-4">
       {/* HEADER */}
-      <div className="card-custom bg-white p-4 mb-4 border-start border-primary border-4 shadow-sm">
-        <div className="d-flex justify-content-between align-items-center">
+      <div className="card-custom bg-white p-3 p-sm-4 mb-4 border-start border-primary border-4 shadow-sm">
+        <div className="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-3">
           <div>
             <span className="badge bg-primary-subtle text-primary border border-primary-subtle mb-1">
               Candidate Academic Record
             </span>
-            <h3 className="fw-bold text-dark mb-1">My Exam Results & Scorecards</h3>
+            <h3 className="fw-bold text-dark mb-1 fs-4 fs-sm-3">My Exam Results & Scorecards</h3>
             <p className="text-secondary small mb-0">
               Verified assessment scorecards, institutional rankings, and comprehensive question performance analyses.
             </p>
           </div>
-          <div className="d-flex gap-2">
-            <button className="btn btn-outline-warning btn-sm fw-semibold d-flex align-items-center gap-1" onClick={handleOpenMyChallenges}>
+          <div className="d-flex flex-wrap gap-2 w-100 w-sm-auto">
+            <button className="btn btn-outline-warning btn-sm fw-semibold d-flex align-items-center gap-1 flex-grow-1 flex-sm-grow-0 justify-content-center" onClick={handleOpenMyChallenges}>
               <i className="bi bi-patch-question-fill text-warning"></i> My Grievances
             </button>
-            <button className="btn btn-outline-secondary btn-sm" onClick={fetchMyResults}>
+            <button className="btn btn-outline-secondary btn-sm flex-grow-1 flex-sm-grow-0 justify-content-center" onClick={fetchMyResults}>
               <i className="bi bi-arrow-clockwise me-1"></i> Refresh
             </button>
           </div>
@@ -242,23 +242,23 @@ const StudentResults = () => {
                   {isPublished && scorecard ? (
                     <>
                       {/* Score Summary Box */}
-                      <div className="row g-2 p-3 bg-light rounded-3 mb-3 border text-center">
-                        <div className="col-3 border-end">
+                      <div className="row g-2 p-2.5 p-sm-3 bg-light rounded-3 mb-3 border text-center">
+                        <div className="col-6 col-sm-3 border-end">
                           <span className="text-muted d-block small" style={{ fontSize: '0.72rem' }}>Rank</span>
                           <strong className="fs-5 text-dark">
                             {scorecard.rank === 1 ? '🥇 1st' : scorecard.rank === 2 ? '🥈 2nd' : scorecard.rank === 3 ? '🥉 3rd' : `#${scorecard.rank}`}
                           </strong>
                         </div>
-                        <div className="col-3 border-end">
+                        <div className="col-6 col-sm-3 border-end-sm">
                           <span className="text-muted d-block small" style={{ fontSize: '0.72rem' }}>Score</span>
                           <strong className="fs-5 text-primary">{scorecard.marksObtained}</strong>
                           <span className="text-muted small" style={{ fontSize: '0.7rem' }}> / {scorecard.maxMarks}</span>
                         </div>
-                        <div className="col-3 border-end">
+                        <div className="col-6 col-sm-3 border-end pt-2 pt-sm-0">
                           <span className="text-muted d-block small" style={{ fontSize: '0.72rem' }}>Percentage</span>
                           <strong className="fs-5 text-dark">{scorecard.percentage}%</strong>
                         </div>
-                        <div className="col-3">
+                        <div className="col-6 col-sm-3 pt-2 pt-sm-0">
                           <span className="text-muted d-block small" style={{ fontSize: '0.72rem' }}>Outcome</span>
                           <span className={`badge ${scorecard.isPassed ? 'bg-success' : 'bg-danger'}`}>
                             {scorecard.isPassed ? 'PASSED' : 'NEEDS WORK'}
@@ -267,7 +267,7 @@ const StudentResults = () => {
                       </div>
 
                       {/* Performance Indicators */}
-                      <div className="d-flex justify-content-between text-muted small mb-4 px-1">
+                      <div className="d-flex flex-wrap justify-content-between gap-1 text-muted small mb-3 mb-sm-4 px-1">
                         <span><strong>Attempted:</strong> {scorecard.attempted}/{res.totalQuestions}</span>
                         <span className="text-success"><strong>Correct:</strong> {scorecard.correct}</span>
                         <span className="text-danger"><strong>Wrong:</strong> {scorecard.wrong}</span>
@@ -275,7 +275,7 @@ const StudentResults = () => {
                       </div>
 
                       {/* Action Buttons */}
-                      <div className="d-flex flex-wrap gap-2 mt-auto pt-3 border-top">
+                      <div className="d-flex flex-column flex-sm-row flex-wrap gap-2 mt-auto pt-3 border-top">
                         <button
                           className="btn btn-primary btn-sm flex-grow-1 fw-semibold d-flex align-items-center justify-content-center gap-1"
                           onClick={() => handleOpenScorecard(res.resultId)}

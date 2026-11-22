@@ -137,12 +137,12 @@ const AnswerKeyChallengeStudio = () => {
         </div>
 
         {/* Filter Controls */}
-        <div className="d-flex flex-wrap align-items-center gap-2 mt-2 mt-md-0">
-          <div className="d-flex align-items-center gap-1">
+        <div className="d-flex flex-wrap align-items-center gap-2 mt-2 mt-md-0 w-100 w-md-auto">
+          <div className="d-flex align-items-center gap-1 flex-grow-1 flex-sm-grow-0">
             <label className="fw-semibold text-secondary small text-nowrap mb-0">Exam:</label>
             <select
               className="form-select form-select-sm"
-              style={{ minWidth: '220px' }}
+              style={{ minWidth: '160px' }}
               value={selectedExamId}
               onChange={(e) => setSelectedExamId(e.target.value)}
               disabled={loadingExams}

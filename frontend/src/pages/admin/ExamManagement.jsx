@@ -274,7 +274,7 @@ const ExamManagement = () => {
         </div>
 
         <button
-          className="btn btn-primary fw-semibold shadow-sm d-flex align-items-center gap-2"
+          className="btn btn-primary fw-semibold shadow-sm d-flex align-items-center justify-content-center gap-2 align-self-stretch align-self-md-auto"
           onClick={handleOpenCreateModal}
         >
           <i className="bi bi-calendar-plus-fill"></i>
@@ -295,14 +295,14 @@ const ExamManagement = () => {
 
       {/* Filter Tabs & Search Bar */}
       <div className="card-custom bg-white p-3 mb-4">
-        <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+        <div className="d-flex flex-column flex-md-row justify-content-between align-items-stretch align-items-md-center gap-3">
           {/* Status Pills */}
-          <div className="btn-group btn-group-sm" role="group">
+          <div className="d-flex flex-wrap gap-1" role="group">
             {['all', 'scheduled', 'active', 'completed', 'draft'].map((st) => (
               <button
                 key={st}
                 type="button"
-                className={`btn text-capitalize ${statusFilter === st ? 'btn-primary fw-bold' : 'btn-outline-secondary'}`}
+                className={`btn btn-sm text-capitalize ${statusFilter === st ? 'btn-primary fw-bold' : 'btn-outline-secondary'}`}
                 onClick={() => setStatusFilter(st)}
               >
                 {st === 'active' ? '● Live Now' : st}
@@ -311,10 +311,10 @@ const ExamManagement = () => {
           </div>
 
           {/* Search & Subject Dropdown */}
-          <div className="d-flex align-items-center gap-2">
+          <div className="d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center gap-2 w-100 w-md-auto">
             <select
-              className="form-select form-select-sm bg-light"
-              style={{ width: '180px' }}
+              className="form-select form-select-sm bg-light flex-grow-1"
+              style={{ minWidth: '130px' }}
               value={subjectFilter}
               onChange={(e) => setSubjectFilter(e.target.value)}
             >
@@ -326,7 +326,7 @@ const ExamManagement = () => {
               ))}
             </select>
 
-            <div className="input-group input-group-sm" style={{ width: '220px' }}>
+            <div className="input-group input-group-sm flex-grow-1" style={{ minWidth: '160px' }}>
               <input
                 type="text"
                 className="form-control"
@@ -1023,7 +1023,7 @@ const ExamManagement = () => {
                 </div>
 
                 <h6 className="fw-bold text-dark mb-2">Candidate Roster ({selectedExamDetails.assignments?.length || 0})</h6>
-                <div style={{ maxHeight: '180px', overflowY: 'auto' }} className="border rounded">
+                <div style={{ maxHeight: '180px', overflowY: 'auto' }} className="border rounded table-responsive">
                   <table className="table table-sm mb-0">
                     <thead className="table-light">
                       <tr>

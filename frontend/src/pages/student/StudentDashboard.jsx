@@ -6,18 +6,18 @@ const StudentDashboard = () => {
   const { user } = useAuth();
 
   return (
-    <div className="container-fluid py-4 px-3 px-md-4">
-      <div className="bg-primary text-white p-4 rounded-4 mb-4 shadow-sm">
-        <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+    <div className="container-fluid py-3 py-sm-4 px-2 px-sm-3 px-md-4">
+      <div className="bg-primary text-white p-3 p-sm-4 rounded-4 mb-4 shadow-sm">
+        <div className="d-flex flex-column flex-md-row justify-content-between align-items-stretch align-items-md-center gap-3">
           <div>
             <span className="badge bg-white text-primary mb-2 fw-bold">Student Portal</span>
-            <h2 className="fw-bold mb-1">Hello, {user?.name}!</h2>
-            <p className="mb-0 text-white-50">
+            <h2 className="fw-bold mb-1 fs-3 fs-sm-2">Hello, {user?.name}!</h2>
+            <p className="mb-0 text-white-50 small">
               Welcome to the examination portal for {user?.institution?.name || 'Your Institution'}.
             </p>
           </div>
           <div>
-            <Link to="/student/exams" className="btn btn-light fw-bold px-4 py-2 text-primary shadow-sm">
+            <Link to="/student/exams" className="btn btn-light fw-bold px-4 py-2 text-primary shadow-sm w-100 text-center">
               <i className="bi bi-pencil-square me-2"></i> View Available Exams
             </Link>
           </div>
@@ -25,8 +25,8 @@ const StudentDashboard = () => {
       </div>
 
       <div className="row g-3 mb-4">
-        <div className="col-md-4">
-          <div className="card-custom p-3 bg-white">
+        <div className="col-12 col-sm-6 col-md-4">
+          <div className="card-custom p-3 bg-white h-100">
             <div className="d-flex align-items-center gap-3">
               <div className="stat-icon-wrapper bg-primary-subtle text-primary">
                 <i className="bi bi-journal-check fs-4"></i>
@@ -39,8 +39,8 @@ const StudentDashboard = () => {
           </div>
         </div>
 
-        <div className="col-md-4">
-          <div className="card-custom p-3 bg-white">
+        <div className="col-12 col-sm-6 col-md-4">
+          <div className="card-custom p-3 bg-white h-100">
             <div className="d-flex align-items-center gap-3">
               <div className="stat-icon-wrapper bg-success-subtle text-success">
                 <i className="bi bi-check2-circle fs-4"></i>
@@ -53,8 +53,8 @@ const StudentDashboard = () => {
           </div>
         </div>
 
-        <div className="col-md-4">
-          <div className="card-custom p-3 bg-white">
+        <div className="col-12 col-sm-6 col-md-4">
+          <div className="card-custom p-3 bg-white h-100">
             <div className="d-flex align-items-center gap-3">
               <div className="stat-icon-wrapper bg-warning-subtle text-warning">
                 <i className="bi bi-award fs-4"></i>

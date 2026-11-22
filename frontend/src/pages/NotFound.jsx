@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 
 const NotFound = () => {
   return (
-    <div className="vh-100 d-flex align-items-center justify-content-center bg-light p-3">
-      <div className="card-custom bg-white p-5 text-center shadow-sm" style={{ maxWidth: '450px' }}>
+    <div className="min-vh-100 d-flex align-items-center justify-content-center bg-light p-3 py-5">
+      <div className="card-custom bg-white p-4 p-sm-5 text-center shadow-sm w-100" style={{ maxWidth: '450px' }}>
         <h1 className="display-1 fw-bold text-primary mb-0">404</h1>
         <h4 className="fw-bold text-dark mt-2 mb-3">Page Not Found</h4>
         <p className="text-muted small mb-4">

@@ -49,14 +49,14 @@ const AvailableExams = () => {
   return (
     <div className="container-fluid py-4 px-3 px-md-4">
       {/* Student Profile Banner */}
-      <div className="card-custom bg-white p-4 mb-4 border-start border-primary border-4 shadow-sm">
-        <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+      <div className="card-custom bg-white p-3 p-sm-4 mb-4 border-start border-primary border-4 shadow-sm">
+        <div className="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
           <div>
             <span className="badge bg-primary-subtle text-primary border border-primary-subtle mb-1">
               Candidate Examination Dashboard
             </span>
-            <h3 className="fw-bold text-dark mb-1">{student?.name}</h3>
-            <div className="d-flex flex-wrap align-items-center gap-3 text-muted small">
+            <h3 className="fw-bold text-dark mb-1 fs-4 fs-sm-3">{student?.name}</h3>
+            <div className="d-flex flex-wrap align-items-center gap-2 gap-sm-3 text-muted small">
               <span><strong>Student ID:</strong> {student?.student_id}</span>
               <span>•</span>
               <span><strong>Program:</strong> {student?.class || 'B.Tech CSE'}</span>
@@ -67,7 +67,7 @@ const AvailableExams = () => {
             </div>
           </div>
 
-          <button className="btn btn-outline-secondary btn-sm" onClick={fetchExams}>
+          <button className="btn btn-outline-secondary btn-sm align-self-stretch align-self-md-auto" onClick={fetchExams}>
             <i className="bi bi-arrow-clockwise me-1"></i> Refresh Schedule
           </button>
         </div>
@@ -126,7 +126,7 @@ const AvailableExams = () => {
                       </div>
                     </div>
 
-                    <div className="d-flex justify-content-between align-items-center mt-auto pt-2 border-top">
+                    <div className="d-flex flex-column flex-sm-row justify-content-between align-items-stretch align-items-sm-center gap-2 mt-auto pt-2 border-top">
                       <div className="text-muted small">
                         <i className="bi bi-shield-check text-success me-1"></i>
                         Negative Marking: -{exam.negative_marking}
@@ -134,7 +134,7 @@ const AvailableExams = () => {
 
                       <Link
                         to={isInProgress ? `/student/exam-hall/${exam.id}` : `/student/exams/${exam.id}/instructions`}
-                        className={`btn ${isInProgress ? 'btn-warning fw-bold text-dark' : 'btn-success fw-bold'} shadow-sm px-4`}
+                        className={`btn ${isInProgress ? 'btn-warning fw-bold text-dark' : 'btn-success fw-bold'} shadow-sm px-4 text-center`}
                       >
                         {isInProgress ? (
                           <>

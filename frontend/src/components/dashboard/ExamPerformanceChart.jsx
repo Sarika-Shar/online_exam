@@ -90,22 +90,22 @@ const ExamPerformanceChart = ({ summary }) => {
 
   return (
     <div className="row g-3">
-      <div className="col-md-5">
-        <div className="border rounded-3 p-3 bg-white h-100">
+      <div className="col-12 col-lg-5" style={{ minWidth: 0, maxWidth: '100%' }}>
+        <div className="border rounded-3 p-3 bg-white h-100 overflow-hidden" style={{ minWidth: 0, maxWidth: '100%' }}>
           <h6 className="fw-semibold text-dark mb-3" style={{ fontSize: '0.9rem' }}>
             Exam Execution Status
           </h6>
-          <div style={{ height: '220px', position: 'relative' }}>
+          <div className="chart-container" style={{ height: '220px', position: 'relative', width: '100%', maxWidth: '100%', overflow: 'hidden' }}>
             <Doughnut data={examStatusData} options={doughnutOptions} />
           </div>
         </div>
       </div>
-      <div className="col-md-7">
-        <div className="border rounded-3 p-3 bg-white h-100">
+      <div className="col-12 col-lg-7" style={{ minWidth: 0, maxWidth: '100%' }}>
+        <div className="border rounded-3 p-3 bg-white h-100 overflow-hidden" style={{ minWidth: 0, maxWidth: '100%' }}>
           <h6 className="fw-semibold text-dark mb-3" style={{ fontSize: '0.9rem' }}>
             Academic Assets Distribution
           </h6>
-          <div style={{ height: '220px' }}>
+          <div className="chart-container" style={{ height: '220px', position: 'relative', width: '100%', maxWidth: '100%', overflow: 'hidden' }}>
             <Bar data={barData} options={barOptions} />
           </div>
         </div>

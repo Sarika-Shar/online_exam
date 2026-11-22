@@ -9,17 +9,28 @@ const Sidebar = ({ isOpen, onClose }) => {
 
   return (
     <aside className={`app-sidebar ${isOpen ? 'show' : ''}`}>
-      <div className="sidebar-brand">
-        <div
-          className="bg-primary rounded-3 d-flex align-items-center justify-content-center text-white"
-          style={{ width: '36px', height: '36px', fontWeight: 800 }}
+      <div className="sidebar-brand justify-content-between">
+        <div className="d-flex align-items-center gap-2 overflow-hidden">
+          <div
+            className="bg-primary rounded-3 d-flex align-items-center justify-content-center text-white flex-shrink-0"
+            style={{ width: '36px', height: '36px', fontWeight: 800 }}
+          >
+            <i className="bi bi-mortarboard-fill"></i>
+          </div>
+          <div className="text-truncate">
+            <div className="lh-1 text-truncate" style={{ fontSize: '1.05rem' }}>SARBIT INFOTECH</div>
+            <small className="text-secondary" style={{ fontSize: '0.72rem' }}>Enterprise Examination</small>
+          </div>
+        </div>
+        <button
+          type="button"
+          className="btn btn-sm text-secondary hover-text-white d-lg-none p-1 border-0"
+          onClick={onClose}
+          aria-label="Close Sidebar"
+          style={{ width: '32px', height: '32px' }}
         >
-          <i className="bi bi-mortarboard-fill"></i>
-        </div>
-        <div>
-          <div className="lh-1" style={{ fontSize: '1.05rem' }}>SARBIT INFOTECH</div>
-          <small className="text-secondary" style={{ fontSize: '0.72rem' }}>Enterprise Examination</small>
-        </div>
+          <i className="bi bi-x-lg fs-5"></i>
+        </button>
       </div>
 
       <div className="sidebar-nav">

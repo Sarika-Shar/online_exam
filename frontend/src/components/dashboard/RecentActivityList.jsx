@@ -39,16 +39,16 @@ const RecentActivityList = ({ activities = [] }) => {
         return (
           <div key={act.id} className="activity-item">
             <div className={`activity-dot bg-${badge.color}`}></div>
-            <div className="flex-grow-1">
-              <div className="d-flex align-items-center justify-content-between">
-                <span className="fw-semibold text-dark" style={{ fontSize: '0.88rem' }}>
+            <div className="flex-grow-1" style={{ minWidth: 0 }}>
+              <div className="d-flex flex-wrap align-items-center justify-content-between gap-1">
+                <span className="fw-semibold text-dark text-truncate" style={{ fontSize: '0.88rem', maxWidth: '170px' }}>
                   {act.user ? act.user.name : 'System Automated'}
                 </span>
-                <span className="text-muted" style={{ fontSize: '0.75rem' }}>
+                <span className="text-muted text-nowrap" style={{ fontSize: '0.73rem' }}>
                   {formatDate(act.created_at)}
                 </span>
               </div>
-              <div className="text-secondary mt-1" style={{ fontSize: '0.82rem' }}>
+              <div className="text-secondary mt-1" style={{ fontSize: '0.82rem', wordBreak: 'break-word' }}>
                 <span className={`badge bg-${badge.color}-subtle text-${badge.color} me-1`}>
                   {act.action}
                 </span>

@@ -50,34 +50,34 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="container-fluid py-4 px-3 px-md-4">
+    <div className="container-fluid py-3 py-sm-4 px-2 px-sm-3 px-md-4" style={{ minWidth: 0, maxWidth: '100%', overflowX: 'hidden' }}>
       {/* Header Banner */}
-      <div className="d-flex flex-column flex-md-row align-items-md-center justify-content-between pb-3 mb-4 border-bottom gap-3">
+      <div className="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between pb-3 mb-4 border-bottom gap-3">
         <div>
-          <h2 className="fw-bold text-dark mb-1">
+          <h2 className="fw-bold text-dark mb-1 fs-3 fs-sm-2">
             Institutional Dashboard
           </h2>
-          <p className="text-muted mb-0" style={{ fontSize: '0.92rem' }}>
+          <p className="text-muted mb-0 small">
             Welcome back, <span className="fw-semibold text-primary">{user?.name}</span>. Here is the operational summary for{' '}
             <span className="fw-semibold text-dark">{user?.institution?.name || 'All Institutions'}</span>.
           </p>
         </div>
-        <div className="d-flex align-items-center gap-2">
+        <div className="d-flex flex-wrap align-items-center gap-2 w-100 w-md-auto">
           <button
-            className="btn btn-outline-secondary btn-sm d-flex align-items-center gap-2"
+            className="btn btn-outline-secondary btn-sm d-flex align-items-center gap-2 flex-grow-1 flex-sm-grow-0 justify-content-center"
             onClick={() => fetchDashboardData(true)}
             disabled={refreshing}
           >
             <i className={`bi bi-arrow-clockwise ${refreshing ? 'spin' : ''}`}></i>
-            <span>{refreshing ? 'Refreshing...' : 'Refresh Data'}</span>
+            <span>{refreshing ? 'Refreshing...' : 'Refresh'}</span>
           </button>
           {['super_admin', 'institution_admin'].includes(user?.role) && (
-            <Link to="/admin/teachers" className="btn btn-outline-primary btn-sm d-flex align-items-center gap-2 shadow-sm">
+            <Link to="/admin/teachers" className="btn btn-outline-primary btn-sm d-flex align-items-center gap-2 shadow-sm flex-grow-1 flex-sm-grow-0 justify-content-center">
               <i className="bi bi-person-workspace"></i>
               <span>Faculty</span>
             </Link>
           )}
-          <Link to="/admin/exams" className="btn btn-primary btn-sm d-flex align-items-center gap-2 shadow-sm">
+          <Link to="/admin/exams" className="btn btn-primary btn-sm d-flex align-items-center gap-2 shadow-sm flex-grow-1 flex-sm-grow-0 justify-content-center">
             <i className="bi bi-plus-circle"></i>
             <span>Schedule Exam</span>
           </Link>
@@ -92,8 +92,8 @@ const AdminDashboard = () => {
       )}
 
       {/* Metrics Row 1: Key Operational Counts (Section 3 Requirements) */}
-      <div className="row g-3 mb-4">
-        <div className="col-12 col-sm-6 col-xl-2">
+      <div className="row g-2 g-sm-3 mb-4">
+        <div className="col-6 col-md-4 col-xl-2">
           <StatCard
             title="Total Students"
             value={summary.totalStudents}
@@ -103,7 +103,7 @@ const AdminDashboard = () => {
           />
         </div>
 
-        <div className="col-12 col-sm-6 col-xl-2">
+        <div className="col-6 col-md-4 col-xl-2">
           <StatCard
             title="Total Exams"
             value={summary.totalExams}
@@ -113,7 +113,7 @@ const AdminDashboard = () => {
           />
         </div>
 
-        <div className="col-12 col-sm-6 col-xl-2">
+        <div className="col-6 col-md-4 col-xl-2">
           <StatCard
             title="Active Exams"
             value={summary.activeExams}
@@ -124,7 +124,7 @@ const AdminDashboard = () => {
           />
         </div>
 
-        <div className="col-12 col-sm-6 col-xl-2">
+        <div className="col-6 col-md-4 col-xl-2">
           <StatCard
             title="Completed Exams"
             value={summary.completedExams}
@@ -134,7 +134,7 @@ const AdminDashboard = () => {
           />
         </div>
 
-        <div className="col-12 col-sm-6 col-xl-2">
+        <div className="col-6 col-md-4 col-xl-2">
           <StatCard
             title="Total Questions"
             value={summary.totalQuestions}
@@ -144,7 +144,7 @@ const AdminDashboard = () => {
           />
         </div>
 
-        <div className="col-12 col-sm-6 col-xl-2">
+        <div className="col-6 col-md-4 col-xl-2">
           <StatCard
             title="Total Results"
             value={summary.totalResults}
@@ -157,51 +157,51 @@ const AdminDashboard = () => {
 
       {/* Quick Action Hub */}
       <div className="row g-3 mb-4">
-        <div className="col-12">
-          <div className="card-custom p-3 bg-white">
-            <div className="d-flex align-items-center justify-content-between mb-2">
+        <div className="col-12" style={{ minWidth: 0, maxWidth: '100%' }}>
+          <div className="card-custom p-3 bg-white" style={{ minWidth: 0, maxWidth: '100%' }}>
+            <div className="d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between mb-3 gap-1">
               <h6 className="fw-bold text-dark mb-0" style={{ fontSize: '0.92rem' }}>
                 <i className="bi bi-lightning-charge-fill text-warning me-1"></i> Quick Action Center
               </h6>
               <span className="text-muted" style={{ fontSize: '0.78rem' }}>Fast navigation to phase modules</span>
             </div>
             <div className="row g-2 pt-1">
-              <div className="col-6 col-md-3">
+              <div className="col-12 col-sm-6 col-md-3">
                 <Link to="/admin/students" className="btn btn-outline-primary w-100 text-start py-2 d-flex align-items-center gap-2">
-                  <i className="bi bi-person-plus-fill fs-5"></i>
-                  <div>
-                    <div className="fw-semibold small">Student Management</div>
-                    <div className="text-muted" style={{ fontSize: '0.7rem' }}>Bulk CSV / Individual</div>
+                  <i className="bi bi-person-plus-fill fs-5 flex-shrink-0"></i>
+                  <div className="overflow-hidden">
+                    <div className="fw-semibold small text-truncate">Student Management</div>
+                    <div className="text-muted text-truncate" style={{ fontSize: '0.7rem' }}>Bulk CSV / Individual</div>
                   </div>
                 </Link>
               </div>
 
-              <div className="col-6 col-md-3">
+              <div className="col-12 col-sm-6 col-md-3">
                 <Link to="/admin/pdf-upload" className="btn btn-outline-primary w-100 text-start py-2 d-flex align-items-center gap-2">
-                  <i className="bi bi-file-earmark-pdf-fill fs-5 text-danger"></i>
-                  <div>
-                    <div className="fw-semibold small">Upload Question PDF</div>
-                    <div className="text-muted" style={{ fontSize: '0.7rem' }}>OCR & Text Extraction</div>
+                  <i className="bi bi-file-earmark-pdf-fill fs-5 text-danger flex-shrink-0"></i>
+                  <div className="overflow-hidden">
+                    <div className="fw-semibold small text-truncate">Upload Question PDF</div>
+                    <div className="text-muted text-truncate" style={{ fontSize: '0.7rem' }}>OCR & Text Extraction</div>
                   </div>
                 </Link>
               </div>
 
-              <div className="col-6 col-md-3">
+              <div className="col-12 col-sm-6 col-md-3">
                 <Link to="/admin/question-bank" className="btn btn-outline-primary w-100 text-start py-2 d-flex align-items-center gap-2">
-                  <i className="bi bi-journal-plus fs-5 text-success"></i>
-                  <div>
-                    <div className="fw-semibold small">Question Bank</div>
-                    <div className="text-muted" style={{ fontSize: '0.7rem' }}>Categorize & Difficulty</div>
+                  <i className="bi bi-journal-plus fs-5 text-success flex-shrink-0"></i>
+                  <div className="overflow-hidden">
+                    <div className="fw-semibold small text-truncate">Question Bank</div>
+                    <div className="text-muted text-truncate" style={{ fontSize: '0.7rem' }}>Categorize & Difficulty</div>
                   </div>
                 </Link>
               </div>
 
-              <div className="col-6 col-md-3">
+              <div className="col-12 col-sm-6 col-md-3">
                 <Link to="/admin/winners" className="btn btn-outline-primary w-100 text-start py-2 d-flex align-items-center gap-2">
-                  <i className="bi bi-trophy-fill fs-5 text-warning"></i>
-                  <div>
-                    <div className="fw-semibold small">Top 3 Winners</div>
-                    <div className="text-muted" style={{ fontSize: '0.7rem' }}>Podium & Voice Announce</div>
+                  <i className="bi bi-trophy-fill fs-5 text-warning flex-shrink-0"></i>
+                  <div className="overflow-hidden">
+                    <div className="fw-semibold small text-truncate">Top 3 Winners</div>
+                    <div className="text-muted text-truncate" style={{ fontSize: '0.7rem' }}>Podium & Voice Announce</div>
                   </div>
                 </Link>
               </div>
@@ -218,8 +218,8 @@ const AdminDashboard = () => {
       {/* Two Column Grid: Upcoming Exams & Recent Activities (Section 3 Requirements) */}
       <div className="row g-4">
         {/* Upcoming Exams Table */}
-        <div className="col-12 col-xl-8">
-          <div className="card-custom bg-white h-100">
+        <div className="col-12 col-xl-8" style={{ minWidth: 0, maxWidth: '100%' }}>
+          <div className="card-custom bg-white h-100 overflow-hidden" style={{ minWidth: 0, maxWidth: '100%' }}>
             <div className="p-3 border-bottom d-flex align-items-center justify-content-between">
               <div>
                 <h5 className="fw-bold text-dark mb-0" style={{ fontSize: '1.05rem' }}>
@@ -231,15 +231,15 @@ const AdminDashboard = () => {
                 View All <i className="bi bi-chevron-right"></i>
               </Link>
             </div>
-            <div className="p-0">
+            <div className="p-0" style={{ minWidth: 0, maxWidth: '100%', overflowX: 'hidden' }}>
               <UpcomingExamsList exams={upcomingExams} />
             </div>
           </div>
         </div>
 
         {/* Recent Activities Audit Feed */}
-        <div className="col-12 col-xl-4">
-          <div className="card-custom bg-white h-100">
+        <div className="col-12 col-xl-4" style={{ minWidth: 0, maxWidth: '100%' }}>
+          <div className="card-custom bg-white h-100 overflow-hidden" style={{ minWidth: 0, maxWidth: '100%' }}>
             <div className="p-3 border-bottom d-flex align-items-center justify-content-between">
               <div>
                 <h5 className="fw-bold text-dark mb-0" style={{ fontSize: '1.05rem' }}>
@@ -251,7 +251,7 @@ const AdminDashboard = () => {
                 Audit Trail <i className="bi bi-chevron-right"></i>
               </Link>
             </div>
-            <div className="p-3">
+            <div className="p-3" style={{ minWidth: 0, maxWidth: '100%', overflowX: 'hidden' }}>
               <RecentActivityList activities={recentActivities} />
             </div>
           </div>

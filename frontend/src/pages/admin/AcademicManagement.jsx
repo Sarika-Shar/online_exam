@@ -390,9 +390,9 @@ const AcademicManagement = () => {
           </p>
         </div>
 
-        <div className="d-flex align-items-center gap-2 mt-2 mt-md-0">
+        <div className="d-flex flex-wrap align-items-center gap-2 mt-2 mt-md-0 w-100 w-md-auto">
           <button
-            className="btn btn-sm btn-outline-secondary"
+            className="btn btn-sm btn-outline-secondary flex-grow-1 flex-sm-grow-0"
             onClick={loadAllAcademicData}
             disabled={loading || actionLoading}
             title="Refresh Data"
@@ -401,19 +401,19 @@ const AcademicManagement = () => {
           </button>
 
           {activeTab === 'classes' && (
-            <button className="btn btn-sm btn-primary" onClick={openAddClassModal}>
+            <button className="btn btn-sm btn-primary flex-grow-1 flex-sm-grow-0" onClick={openAddClassModal}>
               <i className="bi bi-plus-circle me-1"></i> Add Class / Degree
             </button>
           )}
 
           {activeTab === 'batches' && (
-            <button className="btn btn-sm btn-primary" onClick={openAddBatchModal}>
+            <button className="btn btn-sm btn-primary flex-grow-1 flex-sm-grow-0" onClick={openAddBatchModal}>
               <i className="bi bi-plus-circle me-1"></i> Add Batch / Section
             </button>
           )}
 
           {activeTab === 'subjects' && (
-            <button className="btn btn-sm btn-primary" onClick={openAddSubjectModal}>
+            <button className="btn btn-sm btn-primary flex-grow-1 flex-sm-grow-0" onClick={openAddSubjectModal}>
               <i className="bi bi-plus-circle me-1"></i> Add Subject
             </button>
           )}
@@ -502,8 +502,8 @@ const AcademicManagement = () => {
 
       {/* Tabs & Search Bar */}
       <div className="card border-0 shadow-sm rounded-3 mb-4">
-        <div className="card-header bg-white border-bottom p-0">
-          <ul className="nav nav-tabs card-header-tabs mx-3 mt-2 border-bottom-0">
+        <div className="card-header bg-white border-bottom p-0 overflow-auto">
+          <ul className="nav nav-tabs card-header-tabs mx-3 mt-2 border-bottom-0 flex-nowrap" style={{ minWidth: 'max-content' }}>
             <li className="nav-item">
               <button
                 className={`nav-link fw-semibold d-flex align-items-center gap-2 ${

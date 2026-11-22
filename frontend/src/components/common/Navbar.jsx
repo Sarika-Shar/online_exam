@@ -28,9 +28,10 @@ const Navbar = ({ onToggleSidebar }) => {
 
   return (
     <header className="top-navbar">
-      <div className="d-flex align-items-center gap-3">
+      <div className="d-flex align-items-center gap-2 gap-sm-3 overflow-hidden">
         <button
-          className="btn btn-sm btn-light border d-lg-none"
+          className="btn btn-sm btn-light border d-lg-none d-flex align-items-center justify-content-center p-1"
+          style={{ width: '38px', height: '38px' }}
           onClick={onToggleSidebar}
           aria-label="Toggle Navigation"
         >
@@ -38,8 +39,12 @@ const Navbar = ({ onToggleSidebar }) => {
         </button>
 
         {user?.institution ? (
-          <div className="d-flex align-items-center gap-2">
-            <span className="badge bg-primary-subtle text-primary border border-primary-subtle px-2 py-1">
+          <div className="d-flex align-items-center gap-1 gap-sm-2 text-truncate">
+            <span
+              className="badge bg-primary-subtle text-primary border border-primary-subtle px-2 py-1 text-truncate"
+              style={{ maxWidth: 'clamp(120px, 32vw, 240px)' }}
+              title={user.institution.name}
+            >
               <i className="bi bi-buildings me-1"></i> {user.institution.name}
             </span>
             <span className="text-muted d-none d-md-inline" style={{ fontSize: '0.82rem' }}>
@@ -47,15 +52,18 @@ const Navbar = ({ onToggleSidebar }) => {
             </span>
           </div>
         ) : (
-          <span className="badge bg-dark-subtle text-dark border px-2 py-1">
-            <i className="bi bi-shield-check me-1"></i> Global Administration
+          <span
+            className="badge bg-dark-subtle text-dark border px-2 py-1 text-truncate"
+            style={{ maxWidth: 'clamp(120px, 32vw, 240px)' }}
+          >
+            <i className="bi bi-shield-check me-1"></i> Global Admin
           </span>
         )}
       </div>
 
-      <div className="d-flex align-items-center gap-3">
+      <div className="d-flex align-items-center gap-2 gap-sm-3 flex-shrink-0">
         <div className="text-end d-none d-sm-block">
-          <div className="fw-semibold text-dark" style={{ fontSize: '0.9rem' }}>
+          <div className="fw-semibold text-dark text-truncate" style={{ fontSize: '0.9rem', maxWidth: '140px' }}>
             {user?.name || 'User'}
           </div>
           <div className="mt-0">{getRoleBadge(user?.role)}</div>

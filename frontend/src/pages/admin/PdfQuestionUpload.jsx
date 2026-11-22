@@ -510,9 +510,9 @@ const PdfQuestionUpload = () => {
               </div>
             </div>
 
-            <div className="d-flex align-items-center gap-2">
+            <div className="d-flex flex-wrap align-items-center gap-2">
               <button
-                className="btn btn-outline-danger btn-sm"
+                className="btn btn-outline-danger btn-sm flex-grow-1 flex-sm-grow-0"
                 onClick={handleResetFlow}
                 disabled={isSaving}
               >
@@ -696,7 +696,7 @@ const PdfQuestionUpload = () => {
           <p className="text-muted mb-4">
             All approved questions have been verified, indexed, and stored in MySQL under the selected Subject.
           </p>
-          <div className="d-flex justify-content-center gap-3">
+          <div className="d-flex flex-column flex-sm-row justify-content-center gap-2 gap-sm-3">
             <button className="btn btn-outline-primary" onClick={handleResetFlow}>
               <i className="bi bi-cloud-arrow-up me-1"></i> Upload Another PDF
             </button>

@@ -325,27 +325,27 @@ const StudentManagement = () => {
           </p>
         </div>
 
-        <div className="d-flex align-items-center gap-2 mt-2 mt-md-0">
+        <div className="d-flex flex-wrap align-items-center gap-2 mt-2 mt-md-0 w-100 w-md-auto">
           <a
             href={studentService.exportStudentsUrl({
               class_id: selectedClass || undefined,
               batch_id: selectedBatch || undefined
             })}
             download
-            className="btn btn-sm btn-outline-secondary"
+            className="btn btn-sm btn-outline-secondary flex-grow-1 flex-sm-grow-0 text-center"
             title="Export CSV"
           >
             <i className="bi bi-file-earmark-arrow-down me-1"></i> Export CSV
           </a>
           <button
-            className="btn btn-sm btn-outline-primary"
+            className="btn btn-sm btn-outline-primary flex-grow-1 flex-sm-grow-0 text-center"
             onClick={() => setShowBulkModal(true)}
             title="Bulk CSV Import"
           >
             <i className="bi bi-file-earmark-spreadsheet me-1"></i> Bulk Import
           </button>
           <button
-            className="btn btn-sm btn-primary"
+            className="btn btn-sm btn-primary flex-grow-1 flex-sm-grow-0 text-center"
             onClick={() => setShowAddModal(true)}
             title="Register Single Student"
           >
@@ -370,28 +370,28 @@ const StudentManagement = () => {
 
       {/* KPI Cards */}
       <div className="row g-3 mb-4">
-        <div className="col-6 col-md-3">
+        <div className="col-12 col-sm-6 col-md-3">
           <div className="card shadow-sm border-0 border-start border-primary border-4 rounded-3 p-3 h-100">
             <span className="text-muted small fw-bold text-uppercase">Total Students</span>
             <h3 className="fw-bold mt-1 mb-0">{totalStudents}</h3>
             <small className="text-muted">Registered in Roster</small>
           </div>
         </div>
-        <div className="col-6 col-md-3">
+        <div className="col-12 col-sm-6 col-md-3">
           <div className="card shadow-sm border-0 border-start border-success border-4 rounded-3 p-3 h-100">
             <span className="text-success small fw-bold text-uppercase">Active Enrolled</span>
             <h3 className="fw-bold mt-1 mb-0 text-success">{activeCount}</h3>
             <small className="text-muted">Eligible for Exams</small>
           </div>
         </div>
-        <div className="col-6 col-md-3">
+        <div className="col-12 col-sm-6 col-md-3">
           <div className="card shadow-sm border-0 border-start border-warning border-4 rounded-3 p-3 h-100">
             <span className="text-warning small fw-bold text-uppercase">Suspended</span>
             <h3 className="fw-bold mt-1 mb-0 text-warning">{inactiveCount}</h3>
             <small className="text-muted">Access Restricted</small>
           </div>
         </div>
-        <div className="col-6 col-md-3">
+        <div className="col-12 col-sm-6 col-md-3">
           <div className="card shadow-sm border-0 border-start border-info border-4 rounded-3 p-3 h-100">
             <span className="text-info small fw-bold text-uppercase">Classes / Batches</span>
             <h3 className="fw-bold mt-1 mb-0">{classes.length}</h3>

@@ -524,8 +524,8 @@ const LiveMonitor = () => {
       {/* Toast Feedback Alert */}
       {feedbackToast && (
         <div
-          className={`position-fixed bottom-0 end-0 m-4 p-3 rounded-3 shadow-lg text-white d-flex align-items-center gap-2 alert alert-${feedbackToast.type} mb-0`}
-          style={{ zIndex: 1090, maxWidth: '450px' }}
+          className={`position-fixed bottom-0 end-0 m-2 m-sm-4 p-3 rounded-3 shadow-lg text-white d-flex align-items-center gap-2 alert alert-${feedbackToast.type} mb-0`}
+          style={{ zIndex: 1090, maxWidth: 'calc(100vw - 1rem)' }}
         >
           <i
             className={`bi ${

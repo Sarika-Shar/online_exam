@@ -133,41 +133,45 @@ const Login = () => {
             <div className="col-6">
               <button
                 type="button"
-                className="btn btn-sm btn-outline-secondary w-100 text-truncate text-start px-2 py-1"
-                style={{ fontSize: '0.78rem' }}
+                className="btn btn-sm btn-outline-secondary w-100 text-truncate text-start px-2 py-1.5 d-flex align-items-center"
+                style={{ fontSize: '0.78rem', minHeight: '36px' }}
                 onClick={() => handleQuickFill('admin@apex.edu', 'Admin@123')}
               >
-                <i className="bi bi-building me-1 text-primary"></i> Inst. Admin
+                <i className="bi bi-building me-1.5 text-primary flex-shrink-0"></i>
+                <span className="text-truncate">Inst. Admin</span>
               </button>
             </div>
             <div className="col-6">
               <button
                 type="button"
-                className="btn btn-sm btn-outline-secondary w-100 text-truncate text-start px-2 py-1"
-                style={{ fontSize: '0.78rem' }}
+                className="btn btn-sm btn-outline-secondary w-100 text-truncate text-start px-2 py-1.5 d-flex align-items-center"
+                style={{ fontSize: '0.78rem', minHeight: '36px' }}
                 onClick={() => handleQuickFill('teacher@apex.edu', 'Teacher@123')}
               >
-                <i className="bi bi-person-badge me-1 text-warning"></i> Faculty
+                <i className="bi bi-person-badge me-1.5 text-warning flex-shrink-0"></i>
+                <span className="text-truncate">Faculty</span>
               </button>
             </div>
             <div className="col-6">
               <button
                 type="button"
-                className="btn btn-sm btn-outline-secondary w-100 text-truncate text-start px-2 py-1"
-                style={{ fontSize: '0.78rem' }}
+                className="btn btn-sm btn-outline-secondary w-100 text-truncate text-start px-2 py-1.5 d-flex align-items-center"
+                style={{ fontSize: '0.78rem', minHeight: '36px' }}
                 onClick={() => handleQuickFill('student1@apex.edu', 'Student@123')}
               >
-                <i className="bi bi-backpack me-1 text-success"></i> Student
+                <i className="bi bi-backpack me-1.5 text-success flex-shrink-0"></i>
+                <span className="text-truncate">Student</span>
               </button>
             </div>
             <div className="col-6">
               <button
                 type="button"
-                className="btn btn-sm btn-outline-secondary w-100 text-truncate text-start px-2 py-1"
-                style={{ fontSize: '0.78rem' }}
+                className="btn btn-sm btn-outline-secondary w-100 text-truncate text-start px-2 py-1.5 d-flex align-items-center"
+                style={{ fontSize: '0.78rem', minHeight: '36px' }}
                 onClick={() => handleQuickFill('superadmin@onlineexam.com', 'SuperAdmin@123')}
               >
-                <i className="bi bi-shield-lock me-1 text-danger"></i> Super Admin
+                <i className="bi bi-shield-lock me-1.5 text-danger flex-shrink-0"></i>
+                <span className="text-truncate">Super Admin</span>
               </button>
             </div>
           </div>

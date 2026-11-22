@@ -136,8 +136,9 @@ const AntiLeakWatermark = ({
       style={{
         position: 'fixed',
         inset: 0,
-        width: '100vw',
-        height: '100vh',
+        width: '100%',
+        height: '100%',
+        maxWidth: '100%',
         pointerEvents: 'none',
         zIndex: 1050,
         overflow: 'hidden',
@@ -160,17 +161,17 @@ const AntiLeakWatermark = ({
           }
           40% {
             top: 75%;
-            left: 70%;
+            left: 60%;
             transform: translate(-10px, 10px) scale(0.98);
           }
           60% {
             top: 30%;
-            left: 65%;
+            left: 55%;
             transform: translate(15px, 5px) scale(1.01);
           }
           80% {
             top: 45%;
-            left: 35%;
+            left: 25%;
             transform: translate(-5px, -10px) scale(1);
           }
           100% {
@@ -183,6 +184,25 @@ const AntiLeakWatermark = ({
         .floating-anti-leak-capsule {
           position: fixed;
           pointer-events: none;
+          z-index: 1060;
+          animation: roamWatermark 32s ease-in-out infinite;
+          will-change: top, left, transform;
+          max-width: 90vw;
+        }
+
+        @media (max-width: 768px) {
+          @keyframes roamWatermark {
+            0% { top: 12%; left: 4%; transform: translate(0, 0); }
+            25% { top: 70%; left: 6%; transform: translate(4px, -4px); }
+            50% { top: 78%; left: 5%; transform: translate(0, 0); }
+            75% { top: 38%; left: 6%; transform: translate(-4px, 4px); }
+            100% { top: 12%; left: 4%; transform: translate(0, 0); }
+          }
+          .floating-anti-leak-capsule {
+            max-width: calc(100vw - 20px) !important;
+            font-size: 0.65rem !important;
+          }
+        }
           z-index: 1060;
           animation: roamWatermark 32s ease-in-out infinite;
           will-change: top, left, transform;
@@ -265,9 +285,9 @@ const AntiLeakWatermark = ({
       {showFloatingBadge && (
         <div className="floating-anti-leak-capsule">
           <div
-            className="px-3 py-2 rounded-pill shadow-sm border d-flex align-items-center gap-2"
+            className="px-2.5 px-sm-3 py-1.5 py-sm-2 rounded-pill shadow-sm border d-flex align-items-center gap-1.5 gap-sm-2 overflow-hidden"
             style={{
-              backgroundColor: 'rgba(248, 250, 252, 0.45)',
+              backgroundColor: 'rgba(248, 250, 252, 0.55)',
               backdropFilter: 'blur(3px)',
               WebkitBackdropFilter: 'blur(3px)',
               borderColor: 'rgba(148, 163, 184, 0.35)',
@@ -280,16 +300,16 @@ const AntiLeakWatermark = ({
             }}
           >
             <span
-              className="rounded-circle d-inline-block bg-danger"
+              className="rounded-circle d-inline-block bg-danger flex-shrink-0"
               style={{ width: '7px', height: '7px', opacity: 0.7 }}
             ></span>
-            <span>{candidateName}</span>
+            <span className="text-truncate" style={{ maxWidth: '120px' }}>{candidateName}</span>
             <span className="text-muted">|</span>
             <span>{candidateRoll}</span>
             <span className="text-muted">|</span>
             <span className="text-primary fw-bold">{liveTimestamp.split(' ')[1] || liveTimestamp}</span>
-            <span className="text-muted">|</span>
-            <span className="text-secondary small">IP: {candidateIp}</span>
+            <span className="text-muted d-none d-sm-inline">|</span>
+            <span className="text-secondary small d-none d-sm-inline">IP: {candidateIp}</span>
           </div>
         </div>
       )}
