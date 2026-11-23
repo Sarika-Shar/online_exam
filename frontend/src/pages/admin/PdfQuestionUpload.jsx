@@ -266,7 +266,98 @@ const PdfQuestionUpload = () => {
 
       {/* Stepper Indicator */}
       <div className="card-custom bg-white p-3 mb-4">
-        <div className="d-flex align-items-center justify-content-around text-center">
+        {/* Mobile View: 3 Lines (Stacked Vertically) */}
+        <div className="d-flex flex-column d-md-none gap-2">
+          <div
+            className={`d-flex align-items-center p-2 rounded-3 ${
+              currentStep === 1
+                ? 'bg-primary-subtle text-primary fw-bold border border-primary-subtle'
+                : currentStep > 1
+                ? 'bg-light text-success fw-semibold'
+                : 'text-muted bg-light'
+            }`}
+          >
+            <span
+              className={`badge rounded-circle d-flex align-items-center justify-content-center me-2.5 flex-shrink-0 ${
+                currentStep === 1
+                  ? 'bg-primary text-white'
+                  : currentStep > 1
+                  ? 'bg-success text-white'
+                  : 'bg-secondary bg-opacity-25 text-secondary'
+              }`}
+              style={{ width: '28px', height: '28px', fontSize: '0.82rem' }}
+            >
+              {currentStep > 1 ? <i className="bi bi-check-lg"></i> : '1'}
+            </span>
+            <div className="flex-grow-1" style={{ fontSize: '0.88rem' }}>
+              Upload PDF & OCR Settings
+            </div>
+            {currentStep === 1 && (
+              <span className="badge bg-primary text-white px-2 py-0.5" style={{ fontSize: '0.68rem' }}>
+                Active
+              </span>
+            )}
+          </div>
+
+          <div
+            className={`d-flex align-items-center p-2 rounded-3 ${
+              currentStep === 2
+                ? 'bg-primary-subtle text-primary fw-bold border border-primary-subtle'
+                : currentStep > 2
+                ? 'bg-light text-success fw-semibold'
+                : 'text-muted bg-light'
+            }`}
+          >
+            <span
+              className={`badge rounded-circle d-flex align-items-center justify-content-center me-2.5 flex-shrink-0 ${
+                currentStep === 2
+                  ? 'bg-primary text-white'
+                  : currentStep > 2
+                  ? 'bg-success text-white'
+                  : 'bg-secondary bg-opacity-25 text-secondary'
+              }`}
+              style={{ width: '28px', height: '28px', fontSize: '0.82rem' }}
+            >
+              {currentStep > 2 ? <i className="bi bi-check-lg"></i> : '2'}
+            </span>
+            <div className="flex-grow-1" style={{ fontSize: '0.88rem' }}>
+              Verify & Edit Extracted MCQs
+            </div>
+            {currentStep === 2 && (
+              <span className="badge bg-primary text-white px-2 py-0.5" style={{ fontSize: '0.68rem' }}>
+                Active
+              </span>
+            )}
+          </div>
+
+          <div
+            className={`d-flex align-items-center p-2 rounded-3 ${
+              currentStep === 3
+                ? 'bg-success-subtle text-success fw-bold border border-success-subtle'
+                : 'text-muted bg-light'
+            }`}
+          >
+            <span
+              className={`badge rounded-circle d-flex align-items-center justify-content-center me-2.5 flex-shrink-0 ${
+                currentStep === 3 ? 'bg-success text-white' : 'bg-secondary bg-opacity-25 text-secondary'
+              }`}
+              style={{ width: '28px', height: '28px', fontSize: '0.82rem' }}
+            >
+              {currentStep === 3 ? <i className="bi bi-check-lg"></i> : '3'}
+            </span>
+            <div className="flex-grow-1" style={{ fontSize: '0.88rem' }}>
+              Approved & Saved in MySQL
+            </div>
+            {currentStep === 3 && (
+              <span className="badge bg-success text-white px-2 py-0.5" style={{ fontSize: '0.68rem' }}>
+                Completed
+              </span>
+            )}
+          </div>
+        </div>
+
+        {/* Desktop View: Horizontal Row with Chevrons */}
+        <div className="d-none d-md-flex align-items-center justify-content-around text-center">
           <div className={`step-item ${currentStep >= 1 ? 'text-primary fw-bold' : 'text-muted'}`}>
             <span className={`badge rounded-circle p-2 me-2 ${currentStep >= 1 ? 'bg-primary text-white' : 'bg-light text-secondary border'}`}>
               1
