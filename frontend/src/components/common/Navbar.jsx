@@ -43,9 +43,9 @@ const Navbar = ({ onToggleSidebar }) => {
             <span
               className="badge bg-primary-subtle text-primary border border-primary-subtle px-2 py-1 text-truncate"
               style={{ maxWidth: 'clamp(120px, 32vw, 240px)' }}
-              title={user.institution.name}
+              title={user.institution.name?.replace(/Apex International University/gi, 'Our International University')}
             >
-              <i className="bi bi-buildings me-1"></i> {user.institution.name}
+              <i className="bi bi-buildings me-1"></i> {user.institution.name?.replace(/Apex International University/gi, 'Our International University')}
             </span>
             <span className="text-muted d-none d-md-inline" style={{ fontSize: '0.82rem' }}>
               ({user.institution.code})

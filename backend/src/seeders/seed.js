@@ -29,7 +29,7 @@ const runSeeder = async (shouldExit = false, wipe = true) => {
 
     // 1. Create Institutions
     const apex = await Institution.create({
-      name: 'Apex International University',
+      name: 'Our International University',
       code: 'APEX_UNIV',
       email: 'contact@apex.edu',
       phone: '+1-555-0199',

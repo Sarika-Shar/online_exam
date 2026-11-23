@@ -3,10 +3,22 @@ import { authService } from '../services/authService';
 
 const AuthContext = createContext(null);
 
+const normalizeUserData = (userData) => {
+  if (!userData) return null;
+  const normalized = { ...userData };
+  if (normalized.institution && normalized.institution.name && normalized.institution.name.includes('Apex International University')) {
+    normalized.institution = {
+      ...normalized.institution,
+      name: 'Our International University'
+    };
+  }
+  return normalized;
+};
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
     const savedUser = localStorage.getItem('user');
-    return savedUser ? JSON.parse(savedUser) : null;
+    return savedUser ? normalizeUserData(JSON.parse(savedUser)) : null;
   });
   const [token, setToken] = useState(() => localStorage.getItem('token') || null);
   const [loading, setLoading] = useState(true);
@@ -18,8 +30,9 @@ export const AuthProvider = ({ children }) => {
         try {
           const res = await authService.getMe();
           if (res.success && res.user) {
-            setUser(res.user);
-            localStorage.setItem('user', JSON.stringify(res.user));
+            const normalizedUser = normalizeUserData(res.user);
+            setUser(normalizedUser);
+            localStorage.setItem('user', JSON.stringify(normalizedUser));
           }
         } catch (err) {
           console.warn('Failed to verify token on app launch:', err.message);
@@ -35,10 +48,11 @@ export const AuthProvider = ({ children }) => {
   const login = async (usernameOrEmail, password) => {
     const res = await authService.login(usernameOrEmail, password);
     if (res.success) {
+      const normalizedUser = normalizeUserData(res.user);
       setToken(res.token);
-      setUser(res.user);
+      setUser(normalizedUser);
       localStorage.setItem('token', res.token);
-      localStorage.setItem('user', JSON.stringify(res.user));
+      localStorage.setItem('user', JSON.stringify(normalizedUser));
     }
     return res;
   };

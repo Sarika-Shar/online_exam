@@ -13,7 +13,7 @@ const generateTestPdf = async (outputPath) => {
   let y = height - 50;
 
   // Title
-  page.drawText('Apex International University - Examination Department', {
+  page.drawText('Our International University - Examination Department', {
     x: 50,
     y,
     size: 16,

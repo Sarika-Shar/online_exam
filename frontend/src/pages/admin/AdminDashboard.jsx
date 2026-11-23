@@ -59,7 +59,9 @@ const AdminDashboard = () => {
           </h2>
           <p className="text-muted mb-0 small">
             Welcome back, <span className="fw-semibold text-primary">{user?.name}</span>. Here is the operational summary for{' '}
-            <span className="fw-semibold text-dark">{user?.institution?.name || 'All Institutions'}</span>.
+            <span className="fw-semibold text-dark">
+              {(user?.institution?.name || 'All Institutions').replace(/Apex International University/gi, 'Our International University')}
+            </span>.
           </p>
         </div>
         <div className="d-flex flex-wrap align-items-center gap-2 w-100 w-md-auto">

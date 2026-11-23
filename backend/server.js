@@ -222,7 +222,7 @@ const startServer = async () => {
 
     // Auto-seed if running on a fresh SQLite/database with no users
     try {
-      const { User } = require('./src/models');
+      const { User, Institution } = require('./src/models');
       const userCount = await User.count();
       if (userCount === 0) {
         logger.info('Empty database detected. Auto-seeding initial users and institutions...');
@@ -242,6 +242,13 @@ const startServer = async () => {
         const teacherUser = await User.findOne({ where: { email: 'teacher@apex.edu' } });
         if (teacherUser && teacherUser.name !== 'Sanjay (CSE Faculty)') {
           await teacherUser.update({ name: 'Sanjay (CSE Faculty)' });
+        }
+
+        // Sync institution name to Our International University
+        const institution = await Institution.findOne({ where: { code: 'APEX_UNIV' } }) || await Institution.findByPk(1);
+        if (institution && institution.name !== 'Our International University') {
+          await institution.update({ name: 'Our International University' });
+          logger.info('Updated institution name to Our International University');
         }
       }
     } catch (autoSeedErr) {
