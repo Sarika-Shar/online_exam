@@ -29,18 +29,29 @@ const Login = () => {
       }
     } catch (err) {
       if (!err.response) {
-        setError('Unable to reach backend server. Please ensure the backend is running on port 5000.');
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+          setError('Unable to reach local backend server. Please ensure the backend is running on port 5000.');
+        } else {
+          setError('Unable to reach backend server. The cloud server (Render) may be waking up from sleep. Please wait 15-30 seconds and try again.');
+        }
+      } else if (err.response.status === 502 || err.response.status === 504 || err.response.status === 503) {
+        setError('Cloud backend server is currently waking up from sleep (Render free-tier cold start). Please wait 20-30 seconds and click Sign In again.');
+      } else if (err.response.status === 401) {
+        setError(err.response?.data?.message || 'Authentication failed: Invalid username/email or password.');
       } else {
-        setError(err.response?.data?.message || 'Authentication failed. Please verify credentials.');
+        setError(err.response?.data?.message || `Server responded with error (${err.response.status}). Please try again.`);
       }
     } finally {
       setSubmitting(false);
     }
   };
 
-  const handleQuickFill = (email, pwd) => {
+  const [activeFilledRole, setActiveFilledRole] = useState('');
+
+  const handleQuickFill = (roleName, email, pwd) => {
     setUsernameOrEmail(email);
     setPassword(pwd);
+    setActiveFilledRole(roleName);
     setError('');
   };
 
@@ -129,48 +140,55 @@ const Login = () => {
           <p className="text-muted text-uppercase fw-bold text-center mb-2" style={{ fontSize: '0.7rem', letterSpacing: '0.05em' }}>
             Instant Evaluation Roles (1-Click Fill)
           </p>
+          {activeFilledRole && (
+            <div className="text-center mb-2">
+              <span className="badge bg-primary-subtle text-primary border border-primary-subtle px-2 py-1" style={{ fontSize: '0.72rem' }}>
+                <i className="bi bi-check-circle-fill me-1"></i> Filled {activeFilledRole} credentials
+              </span>
+            </div>
+          )}
           <div className="row g-2">
             <div className="col-6">
               <button
                 type="button"
-                className="btn btn-sm btn-outline-secondary w-100 text-truncate text-start px-2 py-1.5 d-flex align-items-center"
+                className={`btn btn-sm ${activeFilledRole === 'Inst. Admin' ? 'btn-primary text-white' : 'btn-outline-secondary'} w-100 text-truncate text-start px-2 py-1.5 d-flex align-items-center`}
                 style={{ fontSize: '0.78rem', minHeight: '36px' }}
-                onClick={() => handleQuickFill('admin@apex.edu', 'Admin@123')}
+                onClick={() => handleQuickFill('Inst. Admin', 'admin@apex.edu', 'Admin@123')}
               >
-                <i className="bi bi-building me-1.5 text-primary flex-shrink-0"></i>
+                <i className={`bi bi-building me-1.5 ${activeFilledRole === 'Inst. Admin' ? 'text-white' : 'text-primary'} flex-shrink-0`}></i>
                 <span className="text-truncate">Inst. Admin</span>
               </button>
             </div>
             <div className="col-6">
               <button
                 type="button"
-                className="btn btn-sm btn-outline-secondary w-100 text-truncate text-start px-2 py-1.5 d-flex align-items-center"
+                className={`btn btn-sm ${activeFilledRole === 'Faculty' ? 'btn-warning text-dark' : 'btn-outline-secondary'} w-100 text-truncate text-start px-2 py-1.5 d-flex align-items-center`}
                 style={{ fontSize: '0.78rem', minHeight: '36px' }}
-                onClick={() => handleQuickFill('teacher@apex.edu', 'Teacher@123')}
+                onClick={() => handleQuickFill('Faculty', 'teacher@apex.edu', 'Teacher@123')}
               >
-                <i className="bi bi-person-badge me-1.5 text-warning flex-shrink-0"></i>
+                <i className={`bi bi-person-badge me-1.5 ${activeFilledRole === 'Faculty' ? 'text-dark' : 'text-warning'} flex-shrink-0`}></i>
                 <span className="text-truncate">Faculty</span>
               </button>
             </div>
             <div className="col-6">
               <button
                 type="button"
-                className="btn btn-sm btn-outline-secondary w-100 text-truncate text-start px-2 py-1.5 d-flex align-items-center"
+                className={`btn btn-sm ${activeFilledRole === 'Student' ? 'btn-success text-white' : 'btn-outline-secondary'} w-100 text-truncate text-start px-2 py-1.5 d-flex align-items-center`}
                 style={{ fontSize: '0.78rem', minHeight: '36px' }}
-                onClick={() => handleQuickFill('student1@apex.edu', 'Student@123')}
+                onClick={() => handleQuickFill('Student', 'student1@apex.edu', 'Student@123')}
               >
-                <i className="bi bi-backpack me-1.5 text-success flex-shrink-0"></i>
+                <i className={`bi bi-backpack me-1.5 ${activeFilledRole === 'Student' ? 'text-white' : 'text-success'} flex-shrink-0`}></i>
                 <span className="text-truncate">Student</span>
               </button>
             </div>
             <div className="col-6">
               <button
                 type="button"
-                className="btn btn-sm btn-outline-secondary w-100 text-truncate text-start px-2 py-1.5 d-flex align-items-center"
+                className={`btn btn-sm ${activeFilledRole === 'Super Admin' ? 'btn-danger text-white' : 'btn-outline-secondary'} w-100 text-truncate text-start px-2 py-1.5 d-flex align-items-center`}
                 style={{ fontSize: '0.78rem', minHeight: '36px' }}
-                onClick={() => handleQuickFill('superadmin@onlineexam.com', 'SuperAdmin@123')}
+                onClick={() => handleQuickFill('Super Admin', 'superadmin@onlineexam.com', 'SuperAdmin@123')}
               >
-                <i className="bi bi-shield-lock me-1.5 text-danger flex-shrink-0"></i>
+                <i className={`bi bi-shield-lock me-1.5 ${activeFilledRole === 'Super Admin' ? 'text-white' : 'text-danger'} flex-shrink-0`}></i>
                 <span className="text-truncate">Super Admin</span>
               </button>
             </div>
