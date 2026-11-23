@@ -55,17 +55,20 @@ const ResultManagement = () => {
         academicService.getClasses()
       ]);
 
-      if (examRes.success) {
-        setExams(examRes.exams);
-        if (examRes.exams.length > 0) {
-          setSelectedExamId(examRes.exams[0].id.toString());
+      if (examRes?.success) {
+        const examsList = examRes.data || examRes.exams || [];
+        setExams(examsList);
+        if (examsList.length > 0) {
+          setSelectedExamId(examsList[0].id.toString());
         }
       }
-      if (classRes.success) {
-        setClasses(classRes.classes);
+      if (classRes?.success) {
+        const classesList = classRes.data || classRes.classes || [];
+        setClasses(classesList);
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to load examination registry.');
+      console.error('Failed to load initial results data:', err);
+      setError(err.response?.data?.message || err.message || 'Failed to load examination registry.');
     } finally {
       setLoading(false);
     }
@@ -286,11 +289,15 @@ const ResultManagement = () => {
               value={selectedExamId}
               onChange={(e) => setSelectedExamId(e.target.value)}
             >
-              {exams.map((ex) => (
-                <option key={ex.id} value={ex.id}>
-                  {ex.title} ({ex.subject?.name || 'General'}) — {ex.exam_date}
-                </option>
-              ))}
+              {(!exams || exams.length === 0) ? (
+                <option value="">No examinations found</option>
+              ) : (
+                exams.map((ex) => (
+                  <option key={ex.id} value={ex.id}>
+                    {ex.title} ({ex.subject?.name || 'General'}) — {ex.exam_date}
+                  </option>
+                ))
+              )}
             </select>
           </div>
 
@@ -533,7 +540,7 @@ const ResultManagement = () => {
                         <i className="bi bi-bar-chart-steps me-1"></i> Score Distribution Curve
                       </h6>
                       <div className="row g-2">
-                        {cohortData.distributionBins.map((bin, bIdx) => (
+                        {(cohortData?.distributionBins || []).map((bin, bIdx) => (
                           <div key={bIdx} className="col-12 col-md">
                             <div className="p-2 bg-white rounded border text-center">
                               <span className="badge bg-light text-dark border mb-1 small">{bin.range}</span>
@@ -571,7 +578,7 @@ const ResultManagement = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {itemAnalysisData.itemAnalysis.map((item) => {
+                        {(itemAnalysisData?.itemAnalysis || []).map((item) => {
                           const pClass = item.difficultyIndex >= 0.75
                             ? 'bg-success text-white'
                             : item.difficultyIndex < 0.35
@@ -606,7 +613,7 @@ const ResultManagement = () => {
                               </td>
                               <td>
                                 <div className="d-flex gap-1 flex-wrap">
-                                  {item.distractors.map((dist) => (
+                                  {(item.distractors || []).map((dist) => (
                                     <span
                                       key={dist.key}
                                       className={`badge border ${
@@ -655,7 +662,7 @@ const ResultManagement = () => {
                     onChange={(e) => setSelectedClass(e.target.value)}
                   >
                     <option value="">All Academic Programs</option>
-                    {classes.map((c) => (
+                    {(classes || []).map((c) => (
                       <option key={c.id} value={c.id}>{c.name}</option>
                     ))}
                   </select>
