@@ -523,8 +523,75 @@ const AcademicManagement = () => {
 
       {/* Tabs & Search Bar */}
       <div className="card border-0 shadow-sm rounded-3 mb-4">
-        <div className="card-header bg-white border-bottom p-0 overflow-x-auto" style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}>
-          <ul className="nav nav-tabs card-header-tabs px-2 px-md-3 pt-2 border-bottom-0 flex-nowrap" style={{ minWidth: 'max-content' }}>
+        {/* Mobile View: 3 Lines (Stacked Full-Width Tab Buttons) */}
+        <div className="d-flex flex-column d-md-none p-2.5 gap-2 border-bottom bg-white">
+          <button
+            type="button"
+            className={`btn w-100 text-start d-flex align-items-center justify-content-between p-2.5 rounded-3 fw-semibold transition-all ${
+              activeTab === 'classes'
+                ? 'btn-primary text-white shadow-sm'
+                : 'btn-light text-dark border border-light-subtle'
+            }`}
+            onClick={() => {
+              setActiveTab('classes');
+              setSearchTerm('');
+            }}
+          >
+            <div className="d-flex align-items-center gap-2">
+              <i className={`bi bi-mortarboard-fill fs-5 ${activeTab === 'classes' ? 'text-white' : 'text-primary'}`}></i>
+              <span>Classes & Degrees</span>
+            </div>
+            <span className={`badge ${activeTab === 'classes' ? 'bg-white text-primary' : 'bg-primary-subtle text-primary border border-primary-subtle'} px-2 py-1`}>
+              {classes.length}
+            </span>
+          </button>
+
+          <button
+            type="button"
+            className={`btn w-100 text-start d-flex align-items-center justify-content-between p-2.5 rounded-3 fw-semibold transition-all ${
+              activeTab === 'batches'
+                ? 'btn-success text-white shadow-sm'
+                : 'btn-light text-dark border border-light-subtle'
+            }`}
+            onClick={() => {
+              setActiveTab('batches');
+              setSearchTerm('');
+            }}
+          >
+            <div className="d-flex align-items-center gap-2">
+              <i className={`bi bi-collection-fill fs-5 ${activeTab === 'batches' ? 'text-white' : 'text-success'}`}></i>
+              <span>Batches & Sections</span>
+            </div>
+            <span className={`badge ${activeTab === 'batches' ? 'bg-white text-success' : 'bg-success-subtle text-success border border-success-subtle'} px-2 py-1`}>
+              {batches.length}
+            </span>
+          </button>
+
+          <button
+            type="button"
+            className={`btn w-100 text-start d-flex align-items-center justify-content-between p-2.5 rounded-3 fw-semibold transition-all ${
+              activeTab === 'subjects'
+                ? 'btn-info text-white shadow-sm'
+                : 'btn-light text-dark border border-light-subtle'
+            }`}
+            onClick={() => {
+              setActiveTab('subjects');
+              setSearchTerm('');
+            }}
+          >
+            <div className="d-flex align-items-center gap-2">
+              <i className={`bi bi-book-fill fs-5 ${activeTab === 'subjects' ? 'text-white' : 'text-info'}`}></i>
+              <span>Curriculum Subjects</span>
+            </div>
+            <span className={`badge ${activeTab === 'subjects' ? 'bg-white text-info' : 'bg-info-subtle text-info-emphasis border border-info-subtle'} px-2 py-1`}>
+              {subjects.length}
+            </span>
+          </button>
+        </div>
+
+        {/* Desktop View: Horizontal Tab Bar */}
+        <div className="card-header bg-white border-bottom p-0 d-none d-md-block overflow-x-auto" style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}>
+          <ul className="nav nav-tabs card-header-tabs px-3 pt-2 border-bottom-0 flex-nowrap" style={{ minWidth: 'max-content' }}>
             <li className="nav-item">
               <button
                 className={`nav-link fw-semibold d-flex align-items-center gap-2 ${
