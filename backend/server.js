@@ -263,6 +263,19 @@ const startServer = async () => {
       logger.info(`Enterprise Online Examination Backend running on port ${PORT} [${process.env.NODE_ENV || 'development'}]`);
       logger.info(`Health check available at http://localhost:${PORT}/api/health`);
     });
+
+    // Auto Keep-Alive: Ping public health endpoint every 10 minutes to prevent Render free-tier sleep
+    const RENDER_EXTERNAL_URL = process.env.RENDER_EXTERNAL_URL || 'https://online-exam-4llf.onrender.com';
+    const https = require('https');
+    setInterval(() => {
+      if (process.env.NODE_ENV === 'production' || process.env.RENDER) {
+        https.get(`${RENDER_EXTERNAL_URL}/api/health`, (res) => {
+          logger.info(`[KeepAlive] Auto-pinged cloud server to prevent sleep (Status: ${res.statusCode})`);
+        }).on('error', (err) => {
+          logger.debug(`[KeepAlive] Ping notice: ${err.message}`);
+        });
+      }
+    }, 10 * 60 * 1000); // Every 10 minutes
   } catch (error) {
     logger.error('Failed to start server:', error);
     process.exit(1);

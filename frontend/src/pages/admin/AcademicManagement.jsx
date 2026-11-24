@@ -394,8 +394,8 @@ const AcademicManagement = () => {
   return (
     <div className="container-fluid py-3 py-md-4 px-2 px-sm-3 px-md-4" style={{ minWidth: 0, maxWidth: '100%', overflowX: 'hidden' }}>
       {/* Header */}
-      <div className="d-flex flex-wrap justify-content-between align-items-center mb-3 mb-md-4">
-        <div>
+      <div className="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-3 mb-md-4 gap-2">
+        <div className="flex-grow-1">
           <h3 className="fw-bold mb-1 d-flex align-items-center gap-2 fs-5 fs-md-3">
             <i className="bi bi-mortarboard-fill text-primary flex-shrink-0"></i>
             <span className="text-truncate">Academic Structure (Classes & Batches)</span>
@@ -405,9 +405,9 @@ const AcademicManagement = () => {
           </p>
         </div>
 
-        <div className="d-flex flex-wrap align-items-center gap-2 mt-2 mt-md-0 w-100 w-md-auto">
+        <div className="d-flex flex-wrap align-items-center justify-content-start justify-content-md-end gap-2 mt-2 mt-md-0 w-100 w-md-auto flex-shrink-0">
           <button
-            className="btn btn-sm btn-outline-secondary flex-grow-1 flex-sm-grow-0"
+            className="btn btn-sm btn-outline-secondary flex-grow-1 flex-md-grow-0"
             onClick={loadAllAcademicData}
             disabled={loading || actionLoading}
             title="Refresh Data"
@@ -416,19 +416,19 @@ const AcademicManagement = () => {
           </button>
 
           {activeTab === 'classes' && (
-            <button className="btn btn-sm btn-primary flex-grow-1 flex-sm-grow-0" onClick={openAddClassModal}>
+            <button className="btn btn-sm btn-primary flex-grow-1 flex-md-grow-0" onClick={openAddClassModal}>
               <i className="bi bi-plus-circle me-1"></i> Add Class / Degree
             </button>
           )}
 
           {activeTab === 'batches' && (
-            <button className="btn btn-sm btn-primary flex-grow-1 flex-sm-grow-0" onClick={openAddBatchModal}>
+            <button className="btn btn-sm btn-primary flex-grow-1 flex-md-grow-0" onClick={openAddBatchModal}>
               <i className="bi bi-plus-circle me-1"></i> Add Batch / Section
             </button>
           )}
 
           {activeTab === 'subjects' && (
-            <button className="btn btn-sm btn-primary flex-grow-1 flex-sm-grow-0" onClick={openAddSubjectModal}>
+            <button className="btn btn-sm btn-primary flex-grow-1 flex-md-grow-0" onClick={openAddSubjectModal}>
               <i className="bi bi-plus-circle me-1"></i> Add Subject
             </button>
           )}

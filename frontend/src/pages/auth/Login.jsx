@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
@@ -7,13 +7,24 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [retryStatus, setRetryStatus] = useState(null);
+  const [retryCountdown, setRetryCountdown] = useState(0);
+
+  const retryTimeoutRef = useRef(null);
+  const countdownIntervalRef = useRef(null);
 
   const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    return () => {
+      if (retryTimeoutRef.current) clearTimeout(retryTimeoutRef.current);
+      if (countdownIntervalRef.current) clearInterval(countdownIntervalRef.current);
+    };
+  }, []);
+
+  const executeLogin = async (attempt = 1) => {
     if (!usernameOrEmail || !password) {
       setError('Please provide your username/email and password.');
       return;
@@ -24,26 +35,64 @@ const Login = () => {
       setSubmitting(true);
       const res = await login(usernameOrEmail, password);
       if (res.success) {
+        setRetryStatus(null);
         const destination = location.state?.from?.pathname || (res.user.role === 'student' ? '/student/dashboard' : '/admin/dashboard');
         navigate(destination, { replace: true });
       }
     } catch (err) {
+      const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      const isColdStart = (err.response && [502, 503, 504].includes(err.response.status)) || (!err.response && !isLocalhost);
+
+      if (isColdStart && !isLocalhost && attempt < 3) {
+        setRetryStatus({ attempt, max: 3 });
+        setRetryCountdown(6);
+        let seconds = 6;
+
+        if (countdownIntervalRef.current) clearInterval(countdownIntervalRef.current);
+        countdownIntervalRef.current = setInterval(() => {
+          seconds -= 1;
+          setRetryCountdown(seconds);
+          if (seconds <= 0) {
+            clearInterval(countdownIntervalRef.current);
+          }
+        }, 1000);
+
+        if (retryTimeoutRef.current) clearTimeout(retryTimeoutRef.current);
+        retryTimeoutRef.current = setTimeout(() => {
+          executeLogin(attempt + 1);
+        }, 6000);
+        return;
+      }
+
+      setRetryStatus(null);
+      setSubmitting(false);
+
       if (!err.response) {
-        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        if (isLocalhost) {
           setError('Unable to reach local backend server. Please ensure the backend is running on port 5000.');
         } else {
           setError('Unable to reach backend server. The cloud server (Render) may be waking up from sleep. Please wait 15-30 seconds and try again.');
         }
       } else if (err.response.status === 502 || err.response.status === 504 || err.response.status === 503) {
-        setError('Cloud backend server is currently waking up from sleep (Render free-tier cold start). Please wait 20-30 seconds and click Sign In again.');
+        if (isLocalhost) {
+          setError('Local backend server is not running on port 5000 (Vite Proxy Gateway Error). Please run "node server.js" in the backend directory.');
+        } else {
+          setError('Cloud backend server is currently waking up from sleep (Render free-tier cold start). Please wait 20-30 seconds and click Sign In again.');
+        }
       } else if (err.response.status === 401) {
         setError(err.response?.data?.message || 'Authentication failed: Invalid username/email or password.');
       } else {
         setError(err.response?.data?.message || `Server responded with error (${err.response.status}). Please try again.`);
       }
-    } finally {
-      setSubmitting(false);
     }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setRetryStatus(null);
+    if (retryTimeoutRef.current) clearTimeout(retryTimeoutRef.current);
+    if (countdownIntervalRef.current) clearInterval(countdownIntervalRef.current);
+    executeLogin(1);
   };
 
   const [activeFilledRole, setActiveFilledRole] = useState('');
@@ -69,8 +118,20 @@ const Login = () => {
           <p className="text-muted small">Institutional Online Examination Management Platform</p>
         </div>
 
-        {error && (
-          <div className="alert alert-danger d-flex align-items-center py-2 px-3 small rounded-3" role="alert">
+        {retryStatus && (
+          <div className="alert alert-warning border-warning border-opacity-50 d-flex align-items-center py-2.5 px-3 small rounded-3 shadow-sm mb-3" role="alert">
+            <div className="spinner-border spinner-border-sm text-warning me-2.5 flex-shrink-0" role="status"></div>
+            <div>
+              <div className="fw-semibold text-dark">Connecting to Cloud Server...</div>
+              <div className="text-secondary small">
+                Server is waking up from sleep. Automatically reconnecting in <strong>{retryCountdown}s</strong> (Attempt {retryStatus.attempt} of {retryStatus.max})...
+              </div>
+            </div>
+          </div>
+        )}
+
+        {error && !retryStatus && (
+          <div className="alert alert-danger d-flex align-items-center py-2 px-3 small rounded-3 mb-3" role="alert">
             <i className="bi bi-exclamation-triangle-fill me-2 fs-5"></i>
             <div>{error}</div>
           </div>
@@ -124,7 +185,7 @@ const Login = () => {
             {submitting ? (
               <>
                 <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                <span>Authenticating...</span>
+                <span>{retryStatus ? `Connecting (${retryCountdown}s)...` : 'Authenticating...'}</span>
               </>
             ) : (
               <>
