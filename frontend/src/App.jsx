@@ -50,6 +50,11 @@ const HomeRedirect = () => {
 };
 
 function App() {
+  React.useEffect(() => {
+    // Silently pre-warm cloud backend server on app boot
+    fetch('/api/health').catch(() => {});
+  }, []);
+
   return (
     <Routes>
       {/* Public Routes */}

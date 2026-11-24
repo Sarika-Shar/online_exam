@@ -18,6 +18,9 @@ const Login = () => {
   const location = useLocation();
 
   useEffect(() => {
+    // Pre-warm backend API health check silently when login page opens
+    fetch('/api/health').catch(() => {});
+
     return () => {
       if (retryTimeoutRef.current) clearTimeout(retryTimeoutRef.current);
       if (countdownIntervalRef.current) clearInterval(countdownIntervalRef.current);
@@ -43,8 +46,8 @@ const Login = () => {
       const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
       const isColdStart = (err.response && [502, 503, 504].includes(err.response.status)) || (!err.response && !isLocalhost);
 
-      if (isColdStart && !isLocalhost && attempt < 3) {
-        setRetryStatus({ attempt, max: 3 });
+      if (isColdStart && !isLocalhost && attempt < 7) {
+        setRetryStatus({ attempt, max: 7 });
         setRetryCountdown(6);
         let seconds = 6;
 
